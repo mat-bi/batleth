@@ -44,12 +44,10 @@ case "$#" in
 				mkdir /var/log/batleth  
 				chmod 667 /var/log/batleth
 				
-				mix install 
-				mix compile 
+				mix compile
 				;;
 			"uninstall")
 				cd /etc/batleth
-				mix uninstall &> /dev/null
 				/etc/init.d/batleth stop &> /dev/null
 				cd ..
 				rm -rf batleth

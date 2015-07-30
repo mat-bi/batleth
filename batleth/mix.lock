@@ -1,2 +1,6 @@
 %{"amnesia": {:git, "git://github.com/meh/amnesia.git", "0c2492bebfeca706978d26e4ee0bfe0fc409b086", [tag: :master]},
-  "exquisite": {:hex, :exquisite, "0.1.4"}}
+  "decimal": {:hex, :decimal, "1.1.0"},
+  "esqlite": {:hex, :esqlite, "0.2.1"},
+  "exquisite": {:hex, :exquisite, "0.1.4"},
+  "pipe": {:hex, :pipe, "0.0.2"},
+  "sqlitex": {:git, "git://github.com/mmmries/sqlitex.git", "9c4f44d8aa8297b0fb8caa1efa84c3ad43c2141d", [tag: :master]}}

@@ -1,17 +1,17 @@
-defmodule Mix.Tasks.Install do
-  use Mix.Task
-  use Database
+#defmodule Mix.Tasks.Install do
+#  use Mix.Task
+#  use Database
 
-  def run(_) do
-
-    Amnesia.Schema.create
-    Amnesia.start    
-    
-    Database.create(disk: [node])
-
-     Database.wait
-	    
-    
-    Amnesia.stop
-  end
-end
+#  def run(_) do
+#
+#    Amnesia.Schema.create
+#    Amnesia.start    
+#    
+#    Database.create(disk: [node])
+#
+ #    Database.wait
+#	    
+ #   
+  #  Amnesia.stop
+  #end
+#end

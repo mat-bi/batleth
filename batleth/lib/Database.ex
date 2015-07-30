@@ -1,68 +1,73 @@
-require Amnesia
-use Amnesia
+defmodule Database do
+	use GenServer
+	@supervision_name :sql
+	@table_name "batleth_records"
 
-defdatabase Database do
-    deftable Wpis, [ :timestamp, :status, :pr, :last_st_change ], type: :ordered_set do
-        @type t :: %Wpis{timestamp: non_neg_integer, status: non_neg_integer, last_st_change: non_neg_integer, pr: non_neg_integer}
-        
-        @doc """
-            Returns a list of records from timestamp to timestamp.
-            """
-        def get(tmp2, tmp3) do
-            Amnesia.transaction do
-               r = where timestamp > tmp2 and timestamp < tmp3
-               Amnesia.Selection.values(r)
-            end
-        end
-	def get(tmp) do
-		Amnesia.transaction do
-			read(tmp)
-		end
+	def start_link(_,_) do
+		{:ok, db} = Sqlitex.open('batleth.sqlite')
+		GenServer.start(__MODULE__, db, [name: @supervision_name])
 	end
-   
-        @doc """
-             Returns the timestamp of the last record from the database
-             """
 
-        def getLast() do
-            Amnesia.transaction do
-                Wpis.last(true)
-            end
-        end
+	def getLastTimestamp() do
+		GenServer.call(@supervision_name, {:get, :last_timestamp})
+	end
 
+	def handle_call({:get, :last_timestamp}, _, db) do
+		case Sqlitex.query(db, "SELECT timestamp FROM #{@table_name} ORDER BY timestamp DESC LIMIT 1") do
+			[[timestamp: r]] -> r = r
+			[] -> r = nil
+		end
+		{:reply, r, db}
+	end
 
-        @doc """
-             Parses percentage and status to a struct Wpis, adding the current timestamp (in sec)
-             """
+	def getLast() do
+		GenServer.call(@supervision_name, {:get, :last} )
+	end
 
-        def parse_wpis(percentage, st, tmp \\ :timestamp) do
-		tms = Time.timestamp
-		case getLast() do
-			a when is_integer a ->
-	    			a = get(a)
-				last_timestamp = 0
+	def handle_call({:get, :last}, _, db) do
+		{:reply, Sqlitex.query(db, "SELECT * FROM #{@table_name} ORDER BY timestamp DESC LIMIT 1", into: %{}), db}
+	end
 
-	   			if a.status == st do
-					last_timestamp = a.last_st_change
-	    			else
-					last_timestamp = tms
+	def add(status, percentage) do
+		GenServer.cast(@supervision_name, {:add, parse_record(status, percentage)})
+	end
+	
+	def add(nil) do
+		GenServer.cast(@supervision_name, {:add, parse_record(nil, nil)})
+	end
+
+	def parse_record(status, percentage) do
+		i = 0
+		if status == nil or percentage == nil do
+			i = 1	
+		end	
+		if status == nil do
+			status = -1
+		end
+		if percentage == nil do
+			percentage = -1
+		end
+		tmp = Time.timestamp
+		case Database.getLast() do
+			[] -> last_st_change = tmp 
+			[%{status: l_status, timestamp: _, percentage: _, last_st_change: last_change}] -> 
+				if l_status != status do
+					last_st_change = tmp
+				else 
+					last_st_change = last_change
 				end
-			nil -> last_timestamp = tms
-	   	end
-		case tmp do
-			:timestamp -> tms = tms
-			_ -> tms = tms-3
-		end 
-            %Wpis{ timestamp: tms, status: st, pr: percentage, last_st_change: last_timestamp}
-        end
-            
-        @doc """
-            Adds and saves a Wpis in the database
-            """
-        def add(self) do
-            Amnesia.transaction do
-                write(self)
-            end
-        end
-    end
+		end
+		%{status: status, percentage: percentage, timestamp: tmp-i, last_st_change: last_st_change}
+	end
+
+	def handle_cast({:add, %{status: status, percentage: pr, timestamp: tmp, last_st_change: last_st_change}}, db) when is_integer(status) and is_integer(pr) and is_integer(last_st_change) and is_integer(tmp) do
+		IO.inspect Sqlitex.query(db,"INSERT INTO batleth_records VALUES (#{tmp}, #{status}, #{pr}, #{last_st_change})")
+		{:noreply, db}
+	end
+	
+
+	
 end
+		
+
+		

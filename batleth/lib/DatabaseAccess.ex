@@ -1,6 +1,6 @@
 defmodule DatabaseAccess do
 	use GenServer
-	use Database
+	#use Database
 
 	@supervision_name :base
 
@@ -16,7 +16,7 @@ defmodule DatabaseAccess do
 	end
 	
 	def add(at) do
-		GenServer.call(@supervision_name, {:add, at})
+		GenServer.cast(@supervision_name, {:add, at})
 	end
 	
 	defp no_db do
@@ -24,7 +24,7 @@ defmodule DatabaseAccess do
 	end
 
 	def handle_call({:get, :last_timestamp}, _, _) do
-		case Wpis.getLast() do
+		case Database.getLastTimestamp() do
                 	nil -> {:reply, {:ok, 0}, []}
                         l when is_integer(l) -> {:reply, {:ok, l}, []}
                         _ ->    no_db
@@ -32,22 +32,15 @@ defmodule DatabaseAccess do
 		end
 	end
 
-	def handle_call({:add, nil}, _, _) do
-		if is_map(Wpis.parse_wpis(nil, nil, nil) |> Wpis.add) do
-			{:reply, {:ok}, []}
-		else
-			no_db
-			{:reply, {:error, :db}, []}
-		end
+	def handle_cast({:add, nil}, _) do
+		Database.add(nil)
+		{:noreply, []}
+		
 	end
 
-	def handle_call({:add, %{status: stat, pr: per}}, _, _) do
-		case Wpis.parse_wpis(per, stat) |> Wpis.add do
-			l when is_map(l) -> {:reply, {:ok}, []}
-			nil -> 
-				no_db
-				{:reply, {:error, :db}, []}
-		end
+	def handle_cast({:add, %{status: stat, percentage: per}}, _) do
+		Database.add(stat, per)
+		{:noreply, []}
 	end
 end
 
