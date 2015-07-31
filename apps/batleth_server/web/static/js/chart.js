@@ -1,17 +1,3 @@
-import {Socket} from "phoenix"
-
-// let socket = new Socket("/ws")
-// socket.connect()
-// let chan = socket.chan("topic:subtopic", {})
-// chan.join().receive("ok", resp => {
-//   console.log("Joined succesffuly!", resp)
-// })
-
-let App = {
-}
-
-export default App
-
 google.load('visualization', '1.0', {'packages':['corechart']});
 google.setOnLoadCallback(init);
 
@@ -71,8 +57,7 @@ function addData(data) {
   }
 }
 function backData(data) {
- for(var i = 0; i < data.getNumberOfRows(); i++){
+ for(i = 0; i < data.getNumberOfRows(); i++){
    data.setValue(i,2,data.getValue(i,2)+30);
  }
 }
-
