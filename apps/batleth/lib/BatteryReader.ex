@@ -21,7 +21,11 @@ defmodule BatteryReader do
 			_ -> -1
 		end
 	end
-
+	@doc """
+		Reads the current battery status and percentage. Possible responses:
+			{:ok, percentage, status}
+			{:error, :bad_cmd} -> if there was an unknown error
+		"""
 	def read do
 		GenServer.call(@supervision_name, {:read})
 	end
