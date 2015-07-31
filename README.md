@@ -29,3 +29,5 @@ Terminal:
 Issues:
 + Monitoring in one minute interval
 + File to start and stop the app in Ubuntu
+- Can be only run by a root
+- Running with the start of the system 
