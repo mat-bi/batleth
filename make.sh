@@ -50,8 +50,9 @@ case "$#" in
 				mkdir /var/log/batleth  
 				chmod 667 /var/log/batleth
 				
-				
+				mix deps.compile				
 				mix compile
+				
 				chmod -R 777 /etc/batleth
 				;;
 			"uninstall")
