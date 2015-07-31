@@ -10,17 +10,8 @@ defmodule BatteryReader do
 		GenServer.start(__MODULE__,  [] , [name: :battery])
 	end
 
-
-	defp parse_status(status) do
-		case status do
-			"Charging\n" -> 0
-			"Discharging\n" -> 1
-			"Unknown\n" -> 2
-			"Full\n" -> 3
-			"Not present\n" -> 4
-			_ -> -1
-		end
-	end
+	#api
+	
 	@doc """
 		Reads the current battery status and percentage. Possible responses:
 			{:ok, percentage, status}
@@ -30,10 +21,9 @@ defmodule BatteryReader do
 		GenServer.call(@supervision_name, {:read})
 	end
 	
-	defp bad_cmd() do
-		Logging.write(:bad_cmd)
-		{:reply, {:error, :bad_command}, []}
-	end
+	
+	
+	#Implementation
 
 	def handle_call({:read}, _, _) do
 				case File.read("/sys/class/power_supply/BAT1/status") do
@@ -58,6 +48,22 @@ defmodule BatteryReader do
 				end
 				{:reply, { :ok, percentage, status}, []}
 			
+	end
+
+	defp parse_status(status) do
+		case status do
+			"Charging\n" -> 0
+			"Discharging\n" -> 1
+			"Unknown\n" -> 2
+			"Full\n" -> 3
+			"Not present\n" -> 4
+			_ -> -1
+		end
+	end
+
+	defp bad_cmd() do
+		Logging.write(:bad_cmd)
+		{:reply, {:error, :bad_command}, []}
 	end
 
 end

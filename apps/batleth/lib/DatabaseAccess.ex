@@ -46,7 +46,7 @@ defmodule DatabaseAccess do
 	end
 
 
-	#Implemtation	
+	#Implementation	
 	defp no_db do
 		Logging.write(:no_db)
 	end

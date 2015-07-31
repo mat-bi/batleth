@@ -1,4 +1,6 @@
-BatlethUmbrella
+
+Batleth
 ===============
 
-** TODO: Add description **
+# Bat'leth is damn sharp battery monitor written in Elixir
+

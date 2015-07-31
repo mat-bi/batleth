@@ -1,0 +1,4 @@
+[Unit]
+Description=Service of monitoring the batteery status in one minute intervals
+[Service]
+ExecStart=/etc/batleth/make.sh

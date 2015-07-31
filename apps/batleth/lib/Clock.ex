@@ -11,6 +11,13 @@ defmodule Clock do
         	GenServer.start(__MODULE__, [], [name: @supervision_name])
 	end
 
+	@docs """
+		Gets the current time difference between now and the last record. 
+		Possible responses:
+		{:wait, time_difference} -> tells the app to wait
+		{:ok, time_difference} -> ok, read
+		{:error, :db} -> there is an error with the database
+		"""
 	def read do
 		GenServer.call(@supervision_name, {:read})
 	end

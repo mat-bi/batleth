@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/etc/init.d/batleth start
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[pl]=batleth
+Name=batleth
+Comment[pl]=
+Comment=

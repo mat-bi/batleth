@@ -1,3 +1,5 @@
+#A mix task for uninstalling the database. To uninstall, use mix uninstall in the terminal.
+
 defmodule Mix.Tasks.Uninstall do
   use Mix.Task
   use Database

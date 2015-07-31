@@ -1,0 +1,20 @@
+#!/bin/bash
+display_usage() {
+	echo "Wrong parameters"
+	echo -e "Usage: $0 start \n $0 stop"
+} 
+
+case "$#" in
+	"1")
+		case "$1" in
+			"start") 
+				cd /etc/batleth
+				mix &> /dev/null & 
+				echo $! > /etc/batleth/.pid.txt
+				chmod 777 /etc/batleth/.pid.txt;;
+			"stop")
+				kill -9 `cat /etc/batleth/.pid.txt`;;
+			*) display_usage
+		esac;;
+	*) display_usage
+esac
