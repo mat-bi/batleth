@@ -1,0 +1,2 @@
+%{"amnesia": {:git, "git://github.com/meh/amnesia.git", "0c2492bebfeca706978d26e4ee0bfe0fc409b086", [tag: :master]},
+  "exquisite": {:hex, :exquisite, "0.1.4"}}
