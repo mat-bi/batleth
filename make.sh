@@ -30,26 +30,35 @@ case "$#" in
 				else
 					cp files/batleth.service /etc/systemd/
 				fi
-				cp -r batleth /etc
-				echo "Do you want to run it after starting the system? (Y/N): "
-				read r
-				if [[ "$r" = Y || "$r" = y ]]
-					then 
-						cp files/batleth.desktop /etc/xdg/autostart
-				fi
+				mkdir /etc/batleth
+				cp -R apps /etc/batleth
+				cp -R config /etc/batleth
+				cp mix.exs /etc/batleth
+				cp mix.lock /etc/batleth 
+#				echo "Do you want to run it after starting the system? (Y/N): "
+#				read r
+#				if [[ "$r" = Y || "$r" = y ]]
+#					then 
+#						cp files/batleth.desktop /etc/xdg/autostart
+#				fi
 				cd /etc/
 				chmod -R 777 batleth
 				cd batleth 
 				mix deps.get
+				cd apps/batleth
+				mix install
 				mkdir /var/log/batleth  
 				chmod 667 /var/log/batleth
 				
+				
 				mix compile
+				chmod -R 777 /etc/batleth
 				;;
 			"uninstall")
-				cd /etc/batleth
+				cd /etc/batleth/apps/batleth
+				mix uninstall
 				/etc/init.d/batleth stop &> /dev/null
-				cd ..
+				cd /etc
 				rm -rf batleth
 				if [ $z = 0 ]
 				then
@@ -57,6 +66,7 @@ case "$#" in
 				else
 					rm /etc/systemd/batleth.service
 				fi
+
 				;;
 			"purge")
 				$0 uninstall

@@ -3,13 +3,18 @@ display_usage() {
 	echo "Wrong parameters"
 	echo -e "Usage: $0 start \n $0 stop"
 } 
+if [ `whoami` != root ]
+then
+	echo "Program must be run by a root!"
+	exit $?
+fi
 
 case "$#" in
 	"1")
 		case "$1" in
 			"start") 
-				cd /etc/batleth
-				mix &> /dev/null & 
+				cd /etc/batleth/apps/batleth_server
+				mix phoenix.server &> /dev/null & 
 				echo $! > /etc/batleth/.pid.txt
 				chmod 777 /etc/batleth/.pid.txt;;
 			"stop")
