@@ -16,6 +16,13 @@ defmodule BatteryReader do
 		Reads the current battery status and percentage. Possible responses:
 			{:ok, percentage, status}
 			{:error, :bad_cmd} -> if there was an unknown error
+		Status is an integer:
+			0 -> charging
+			1 -> discharging
+			2 -> unknown
+			3 -> full
+			4 -> not present (percentage is 0)
+			-1 -> an error
 		"""
 	def read do
 		GenServer.call(@supervision_name, {:read})

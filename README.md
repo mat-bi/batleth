@@ -26,8 +26,10 @@ Terminal:
     ./make.sh install
 
 
-Issues:
-+ Monitoring in one minute interval
-+ File to start and stop the app in Ubuntu
-- Can be only run by a root
-- Running with the start of the system 
+###Issues:
+Works:
+	+ Monitoring in one minute interval
+	+ File to start and stop the app in Ubuntu
+Doesn't work
+	- Can be only run by a root	
+	- Running with the start of the system 
