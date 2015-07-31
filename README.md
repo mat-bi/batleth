@@ -3,7 +3,8 @@ Batleth
 
 # Bat'leth is damn sharp battery monitor written in Elixir
 
-It consists of two umbrella apps - a module to write the status of the battery and a server. The 
+App uses Amnesia - a simple wrapper of mnesia from Erlang. 
+It consists of two umbrella apps - a module to write the status of the battery and a server. 
 
 Batleth
 
@@ -18,7 +19,7 @@ Batleth
 -> Loger.ex -> logger of the app
 
 ##First run
-use file make.sh to install the app. It copies the files, creates directories etc. It must be run by a root - otherwise it won't do anything.
+Use file make.sh to install the app. It copies the files, creates directories etc. It must be run by a root - otherwise it won't do anything.
 
 Terminal:
 
@@ -27,4 +28,4 @@ Terminal:
 
 Issues:
 + Monitoring in one minute interval
-+ File to start and stop the app
++ File to start and stop the app in Ubuntu
