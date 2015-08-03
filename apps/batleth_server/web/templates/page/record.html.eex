@@ -1,0 +1,7 @@
+<tr>
+  <td><%= parse_date(@record.timestamp) %> </td>
+  <td><%= parse_time(@record.timestamp) %> </td>
+  <td><%= parse_status(@record.status) %></td>
+  <td><%= @record.pr %></td>
+</tr>
+

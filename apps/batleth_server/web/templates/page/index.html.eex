@@ -49,79 +49,10 @@
               </thead>
 
               <tbody>
-              <tr>
-                <td>20.07.2015</td>
-                <td>11:50</td>
-                <td>Charging</td>
-                <td>20%</td>
-              </tr>
-              <tr>
-                <td>20.07.2015</td>
-                <td>11:51</td>
-                <td>Charging</td>
-                <td>20%</td>
-              </tr>
-              <tr>
-                <td>20.07.2015</td>
-                <td>11:52</td>
-                <td>Charging</td>
-                <td>21%</td>
-              </tr>
-              <tr>
-                <td>20.07.2015</td>
-                <td>11:53</td>
-                <td>Charging</td>
-                <td>21%</td>
-              </tr>
-              <tr>
-                <td>20.07.2015</td>
-                <td>11:54</td>
-                <td>Charging</td>
-                <td>21%</td>
-              </tr>
-              <tr>
-                <td>20.07.2015</td>
-                <td>11:55</td>
-                <td>Charging</td>
-                <td>22%</td>
-              </tr>
-              <tr>
-                <td>20.07.2015</td>
-                <td>11:56</td>
-                <td>Charging</td>
-                <td>22%</td>
-              </tr>
-              <tr>
-                <td>20.07.2015</td>
-                <td>11:57</td>
-                <td>Charging</td>
-                <td>22%</td>
-              </tr>
-              <tr>
-                <td>20.07.2015</td>
-                <td>11:58</td>
-                <td>Charging</td>
-                <td>23%</td>
-              </tr>
-              <tr>
-                <td>20.07.2015</td>
-                <td>11:59</td>
-                <td>Charging</td>
-                <td>23%</td>
-              </tr>
-              <tr>
-                <td>20.07.2015</td>
-                <td>12:00</td>
-                <td>Charging</td>
-                <td>23%</td>
-              </tr>
-              <tr>
-                <td>20.07.2015</td>
-                <td>12:01</td>
-                <td>Charging</td>
-                <td>24%</td>
-              </tr>
-              </tbody>
+              <%= for record <- @records do %>
+                <%= render "record.html", record: record %>
+              <% end %>
+                           </tbody>
             </table>
           </div>
         </div>
@@ -147,7 +78,7 @@
                 <h4 class="regular yellow-text text-lighten-4">
                   Current battery level
                 </h4>
-                <h3 class="bold yellow-text text-accent-3">12 %</h3>
+                <h3 class="bold yellow-text text-accent-3"><%= @last.pr%> %</h3>
               </div>
             </div>
           </div>

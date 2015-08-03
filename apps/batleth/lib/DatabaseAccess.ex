@@ -72,12 +72,13 @@ defmodule DatabaseAccess do
 
 	
 	def handle_call({:add, %{status: stat, pr: per}}, _, _) do
-		case Wpis.parse_wpis(per, stat) |> Wpis.add do
-			l when is_map(l) -> {:reply, {:ok}, []}
-			nil -> 
-				no_db
-				{:reply, {:error, :db}, []}
-		end
+    #case Wpis.parse_wpis(per, stat) |> Wpis.add do
+      #	l when is_map(l) -> {:reply, {:ok}, []}
+      #nil -> 
+      #	no_db
+      #	{:reply, {:error, :db}, []}
+      {:reply, {:ok}, []}
+      #end
 	end
 end
 
