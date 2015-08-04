@@ -20,14 +20,14 @@
           </div>
           <div class="col s5">
             <h6>From: </h6>
-            <input type="date" class="datepicker">
+            <input id="date-start" type="date" class="datepicker">
           </div>
           <div class="col s5">
             <h6>To: </h6>
-            <input type="date" class="datepicker">
+            <input id= "date-end" type="date" class="datepicker">
           </div>
           <div class="col s2">
-            <a id="btn-table" class="btn-floating btn-large waves-effect waves-light light-blue darken-2"><i class="material-icons">done</i></a>
+            <a id="btn-table" class="btn-floating btn-large waves-effect waves-light light-blue darken-2" href=<%= page_path(@conn, :index)%>><i class="material-icons">done</i></a>
           </div>
         </div>
         <div class="row">
@@ -57,18 +57,8 @@
           </div>
         </div>
         <div class="row">
-          <ul class="pagination">
-            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-            <li class="active light-blue darken-2"><a href="#!">1</a></li>
-            <li class="waves-effect"><a href="#!">2</a></li>
-            <li class="waves-effect"><a href="#!">3</a></li>
-            <li class="waves-effect"><a href="#!">4</a></li>
-            <li class="waves-effect"><a href="#!">5</a></li>
-            <li class="waves-effect disabled"><a href="#!">...</a></li>
-            <li class="waves-effect"><a href="#!">10</a></li>
-            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-          </ul>
-        </div>
+          <%= render "pagination.html", pages_num: @pages_num, current_page: @current_page, conn: @conn %>
+                  </div>
       </div>
       <div class="col s12 l6">
         <div class ="row">

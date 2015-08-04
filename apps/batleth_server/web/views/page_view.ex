@@ -29,4 +29,8 @@ defmodule BatlethServer.PageView do
     {:ok, time} = DateFormat.format(tms, "%Y/%m/%d", :strftime)
     time
   end
+
+  def pages(pages_num) do
+    Enum.to_list 1..pages_num
+  end
 end

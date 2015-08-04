@@ -1,0 +1,6 @@
+<%= if @p == @current_page do %>
+  <li class = "active light-blue darken-2">
+<% else %>
+  <li class = "waves effect">
+<% end %>
+<a href="<%= page_path(@conn, :index, current_page: @p)%>"><%= @p %></a></li>
