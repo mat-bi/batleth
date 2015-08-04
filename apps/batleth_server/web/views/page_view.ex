@@ -1,6 +1,5 @@
 defmodule BatlethServer.PageView do
   use BatlethServer.Web, :view
-  use Timex
 
   def parse_status(status) do
     case status do
@@ -13,21 +12,12 @@ defmodule BatlethServer.PageView do
     end
   end
 
-  def timestamp_to_time(tms) do
-    time = { div(tms, 1000000), rem(tms, 1000000), 0}
-            |> Date.from(:timestamp)
-  end
-
   def parse_time(tms) do
-    tms = timestamp_to_time(tms)
-    {:ok, time} = DateFormat.format(tms, "%H:%M", :strftime)
-    time
+    BatlethServer.Time.parse_timestamp(tms, "%H:%M")
   end
 
   def parse_date(tms) do
-    tms = timestamp_to_time(tms)
-    {:ok, time} = DateFormat.format(tms, "%Y/%m/%d", :strftime)
-    time
+    BatlethServer.Time.parse_timestamp(tms, "%Y/%m/%d")
   end
 
   def pages(pages_num) do

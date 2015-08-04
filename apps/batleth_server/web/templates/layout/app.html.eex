@@ -15,7 +15,7 @@
   <body>
   <nav class="light-blue" role="navigation">
       <div class="nav-wrapper container">
-        <a id="logo-container" href="#" class="brand-logo">Bat'leth</a>
+        <a id="logo-container" href="<%= page_path(@conn, :index)%>" class="brand-logo">Bat'leth</a>
       </div>
     </nav>
 
@@ -27,8 +27,9 @@
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://www.google.com/jsapi"></script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-    
+
     <script>require("web/static/js/app")</script>
-    
+    <script>require("web/static/js/chart")</script>
+    <script>require("web/static/js/init")</script>
   </body>
 </html>

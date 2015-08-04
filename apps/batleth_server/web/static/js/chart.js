@@ -57,7 +57,7 @@ function addData(data) {
   }
 }
 function backData(data) {
- for(i = 0; i < data.getNumberOfRows(); i++){
+ for(var i = 0; i < data.getNumberOfRows(); i++){
    data.setValue(i,2,data.getValue(i,2)+30);
  }
 }
