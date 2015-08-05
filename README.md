@@ -16,7 +16,7 @@ Batleth
 
 -> DatabaseAccess.ex -> a module to use the database
 
--> Loger.ex -> logger of the app
+-> Logger.ex -> logger of the app
 
 ##First run
 Use file make.sh to install the app. It copies the files, creates directories etc. It must be run by a root - otherwise it won't do anything.
