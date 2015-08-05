@@ -19,8 +19,14 @@ defmodule BatlethServer.Mixfile do
   # Type `mix help compile.app` for more information
   def application do
     [mod: {BatlethServer, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex, :batleth]]
+      applications: app_list(Mix.env) ]
+  end
+
+  defp app_list(:test), do: [:hound | app_list]
+  defp app_list(_),     do: app_list
+  defp app_list do
+    [:phoenix, :phoenix_html, :cowboy, :logger,
+      :phoenix_ecto, :postgrex, :batleth]
   end
 
   # Specifies which paths to compile per environment
@@ -38,6 +44,8 @@ defmodule BatlethServer.Mixfile do
      {:phoenix_html, "~> 1.4"},
      {:phoenix_live_reload, "~> 0.5", only: :dev},
      {:cowboy, "~> 1.0"},
+     {:mock, "~> 0.1.1"},
+     {:hound, "~> 0.7.2"},
      {:timex, "~> 0.16.2"}]
   end
 end

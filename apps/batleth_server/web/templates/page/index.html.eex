@@ -57,18 +57,20 @@
           </div>
         </div>
         <div class="row">
+          <%= if @records != [] do %>
           <%= render "pagination.html", pages_num: @pages_num, current_page: @current_page, conn: @conn %>
+          <% end %>
                   </div>
       </div>
       <div class="col s12 l6">
         <div class ="row">
           <div class= "col s12 m6">
-            <div class="card-panel hoverable valign-wrapper light-blue darken-2 center">
+            <div class="center card-panel hoverable valign-wrapper light-blue darken-2">
               <div class= "valign">
                 <h4 class="regular yellow-text text-lighten-4">
                   Current battery level
                 </h4>
-                <h3 class="bold yellow-text text-accent-3"><%= @last.pr%> %</h3>
+                <h3 id="battery-level" class="bold yellow-text text-accent-3"><%= @last.pr%> %</h3>
               </div>
             </div>
           </div>
