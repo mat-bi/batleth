@@ -42,7 +42,7 @@ defdatabase Database do
         def parse_wpis(percentage, st, tmp \\ :timestamp) do
 		tms = Time.timestamp
 		
-            %Wpis{ timestamp: tms, status: st, pr: percentage}
+            %Wpis{ timestamp: tms, status: st, pr: percentage, last_st_ch: 0}
         end
             
         @doc """

@@ -38,7 +38,7 @@ defmodule DatabaseAccess do
 	end
 
 	@doc """
-		Adds record to the database. Requires map %{status, pr}. Returns {:ok} when added, {:error, :db} otherwise
+		Adds record to the database. Requires map %{status, pr}. Returns {:ok} when added, {:error, :db} 			otherwise
 		"""
 
 	def add(at) do
