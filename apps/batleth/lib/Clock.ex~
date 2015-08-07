@@ -27,11 +27,11 @@ defmodule Clock do
 			{:ok, last_timestamp} ->
 				time_dif = Time.timestamp-last_timestamp
 				cond do
-					time_dif < 60 ->
+					time_dif < 60  ->
 						{:reply, {:wait, time_dif}, []}
 					time_dif > 60 ->
 						{:reply, {:interruption, time_dif}, []}
-					time_dif == 60 or Wpis.get(last_timestamp).status == nil ->
+					time_dif == 60 ->
 						{:reply, {:ok, time_dif}, []}
 				end
 			{:error, :db} -> {:reply, {:error, :db}, []}

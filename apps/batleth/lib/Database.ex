@@ -10,7 +10,7 @@ defdatabase Database do
             """
         def get(tmp2, tmp3) do
             Amnesia.transaction do
-               r = where timestamp > tmp2 and timestamp < tmp3
+               r = where timestamp >= tmp2 and timestamp <= tmp3
                Amnesia.Selection.values(r)
             end
         end

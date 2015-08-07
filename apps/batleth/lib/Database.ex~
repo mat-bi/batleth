@@ -10,7 +10,7 @@ defdatabase Database do
             """
         def get(tmp2, tmp3) do
             Amnesia.transaction do
-               r = where timestamp > tmp2 and timestamp < tmp3
+               r = where timestamp >= tmp2 and timestamp < tmp3
                Amnesia.Selection.values(r)
             end
         end
@@ -42,7 +42,7 @@ defdatabase Database do
         def parse_wpis(percentage, st, tmp \\ :timestamp) do
 		tms = Time.timestamp
 		
-            %Wpis{ timestamp: tms, status: st, pr: percentage, last_st_ch: 0}
+            %Wpis{ timestamp: tms, status: st, pr: percentage}
         end
             
         @doc """
