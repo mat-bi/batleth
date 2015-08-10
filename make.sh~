@@ -13,11 +13,11 @@ else
 	z=1
 fi
 
-if [ `whoami` != root ]
-then
-	echo "Program must be run by a root!"
-	exit $?
-fi
+#if [ `whoami` != root ]
+#then
+#	echo "Program must be run by a root!"
+#	exit $?
+#fi
 
 case "$#" in
 	"1")
