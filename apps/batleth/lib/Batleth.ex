@@ -36,7 +36,7 @@ defmodule Batleth do
 
 						:interruption ->
 							{:ok, percentage, status} = BatteryReader.read
-							DatabaseAccess.add(%{status: nil, pr: nil})
+							#DatabaseAccess.add(%{status: nil, pr: nil})
 							DatabaseAccess.add(%{status: status, pr: percentage})
 							:timer.sleep(60000)
 
