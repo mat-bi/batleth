@@ -6,6 +6,7 @@
               {vsn,"0.0.1"},
               {modules,['Elixir.Batleth','Elixir.BatteryReader',
                         'Elixir.Clock','Elixir.Database',
-                        'Elixir.Database.Wpis','Elixir.DatabaseAccess',
+                        'Elixir.Database.Prosta','Elixir.Database.Wpis',
+                        'Elixir.DatabaseAccess','Elixir.LastChange',
                         'Elixir.Logging','Elixir.Mix.Tasks.Install',
                         'Elixir.Mix.Tasks.Uninstall','Elixir.Time']}]}.

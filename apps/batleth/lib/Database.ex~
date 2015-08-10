@@ -53,7 +53,9 @@ defdatabase Database do
             %Wpis{ timestamp: tms, status: st, pr: percentage}
         end
 
-	def isWpis(zmienna) d
+	def isWpis(zmienna) do
+		is_map(zmienna) and zmienna.__struct__ == Wpis
+	end
             
         @doc """
             Adds and saves a Wpis in the database
@@ -64,4 +66,38 @@ defdatabase Database do
             end
         end
     end
+
+	deftable Prosta, [ :timestamp, :a, :b ], type: :ordered_set do
+		@type t :: %Prosta{timestamp: non_neg_integer, a: Float , b: Float}
+	
+
+		@doc """
+			Gets and returns the record with timestamp, used as a parameter. Returns a %Database.Prosta struct.
+		"""
+		def prosta_get(tmp) do
+			Amnesia.transaction do
+				read(tmp)
+			end
+		end
+
+		@doc """
+            		Gets a list of records from timestamp to timestamp. Returns a list of %Database.Prosta struct.
+            	"""
+		def prosta_get(tmp2, tmp3) do
+            		Amnesia.transaction do
+               			r = where timestamp >= tmp2 and timestamp <= tmp3
+               			Amnesia.Selection.values(r)
+            		end
+        	end
+
+		@doc """
+            		Adds and saves a record in the database.
+            	"""
+		def prosta_add(self) do
+           		Amnesia.transaction do
+                		write(self)
+           		end
+        	end
+
+	end
 end
