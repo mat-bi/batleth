@@ -35,10 +35,10 @@ defmodule Batleth do
 							:timer.sleep(60000 - time_dif*1000)
 
 						:interruption ->
-							#{:ok, percentage, status} = BatteryReader.read
+							{:ok, percentage, status} = BatteryReader.read
 							DatabaseAccess.add(%{status: nil, pr: nil})
-							#DatabaseAccess.add(%{status: status, pr: percentage})
-							#:timer.sleep(60000)
+							DatabaseAccess.add(%{status: status, pr: percentage})
+							:timer.sleep(60000)
 
 						_ -> Logging.write(:bad_cmd)
 							

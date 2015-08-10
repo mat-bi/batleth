@@ -2,8 +2,8 @@ require Amnesia
 use Amnesia
 
 defdatabase Database do
-    deftable Wpis, [ :timestamp, :status, :pr ], type: :ordered_set do
-        @type t :: %Wpis{timestamp: non_neg_integer, status: non_neg_integer, pr: non_neg_integer}
+    deftable Wpis, [ :timestamp, :status, :pr, :last_st_change ], type: :ordered_set do
+        @type t :: %Wpis{timestamp: non_neg_integer, status: non_neg_integer, pr: non_neg_integer, last_st_change: non_neg_integer}
         
         @doc """
             Gets a list of records from timestamp to timestamp. Returns a list of %Database.Wpis struct.
@@ -41,8 +41,20 @@ defdatabase Database do
 
         def parse_wpis(percentage, st, tmp \\ :timestamp) do
 		tms = Time.timestamp
-		
-            %Wpis{ timestamp: tms, status: st, pr: percentage}
+		last = Wpis.get(Wpis.getLast)
+		cond do
+			last == nil ->
+				st_change = tms
+		    	last.status == st ->
+				st_change = last.last_st_change
+			true ->
+				st_change = tms
+		end
+		if percentage == nil and st == nil do
+			tms = tms-3
+		end
+
+            %Wpis{ timestamp: tms, status: st, pr: percentage, last_st_change: st_change}
         end
             
         @doc """
