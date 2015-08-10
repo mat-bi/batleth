@@ -1,19 +1,19 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/home/mat-bi/.nvm/v0.10.40/bin/node',
-1 verbose cli   '/home/mat-bi/.nvm/v0.10.40/bin/npm',
+1 verbose cli [ '/home/janek/.nvm/v0.10.40/bin/node',
+1 verbose cli   '/home/janek/.nvm/v0.10.40/bin/npm',
 1 verbose cli   'install' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.40
 4 error install Couldn't read dependencies
-5 error package.json ENOENT, open '/home/mat-bi/batleth_umbrella/package.json'
+5 error package.json ENOENT, open '/home/janek/batleth/package.json'
 5 error package.json This is most likely not a problem with npm itself.
 5 error package.json npm can't find a package.json file in your current directory.
-6 error System Linux 3.19.0-15-generic
-7 error command "/home/mat-bi/.nvm/v0.10.40/bin/node" "/home/mat-bi/.nvm/v0.10.40/bin/npm" "install"
-8 error cwd /home/mat-bi/batleth_umbrella
+6 error System Linux 3.2.0-88-generic
+7 error command "/home/janek/.nvm/v0.10.40/bin/node" "/home/janek/.nvm/v0.10.40/bin/npm" "install"
+8 error cwd /home/janek/batleth
 9 error node -v v0.10.40
 10 error npm -v 1.4.28
-11 error path /home/mat-bi/batleth_umbrella/package.json
+11 error path /home/janek/batleth/package.json
 12 error code ENOPACKAGEJSON
 13 error errno 34
 14 verbose exit [ 34, true ]

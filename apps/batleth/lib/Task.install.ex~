@@ -11,7 +11,7 @@ defmodule Mix.Tasks.Install do
     
     Database.create(disk: [node])
 
-    Database.wait
+     Database.wait
 	    
     
     Amnesia.stop

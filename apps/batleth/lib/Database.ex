@@ -40,14 +40,22 @@ defdatabase Database do
              """
 
         def parse_wpis(percentage, st, tmp \\ :timestamp) do
-		tms = Time.timestamp
-		last = Wpis.get(Wpis.getLast)
+		case tmp do
+			:timestamp -> tms = Time.timestamp
+			_ -> tms = -1
+		end
+
+		#last = Wpis.get(Wpis.getLast)
 		#if percentage == nil and st == nil do
 		#	tms = tms-3
 		#end
 
             %Wpis{ timestamp: tms, status: st, pr: percentage}
         end
+
+	def isWpis(zmienna) do
+		is_map(zmienna) and zmienna.__struct__ == Wpis
+	end
             
         @doc """
             Adds and saves a Wpis in the database
