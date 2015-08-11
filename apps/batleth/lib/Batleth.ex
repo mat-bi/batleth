@@ -28,6 +28,7 @@ defmodule Batleth do
 					case at do
 						:ok ->
 							{:ok, percentage, status} = BatteryReader.read
+							
 							DatabaseAccess.add(%{status: status, pr: percentage})
 							:timer.sleep(60000)	
 

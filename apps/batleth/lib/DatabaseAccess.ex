@@ -24,6 +24,14 @@ defmodule DatabaseAccess do
 	def get(at) do
 		GenServer.call(@supervision_name, {:get, at})
 	end
+
+	def getLast(n) do
+		GenServer.call(@supervision_name, {:getLast, n})
+	end
+
+	def handle_call({:getLast, n}, _, _) when is_integer(n) do
+		{:reply, Wpis.last(n, []), []}
+	end
 	
 	@doc """
 		Get a list of records that meet the conditions: timestamp >= from and timestamp <= to

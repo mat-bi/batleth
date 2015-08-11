@@ -23,6 +23,15 @@ defdatabase Database do
 			read(tmp)
 		end
 	end
+
+	
+	def lastWpises() do
+		r = get(getLast)
+		Amnesia.transaction do
+			r = where timestamp >= r.timestamp-1800 and timestamp >= LastChange.get and status == r.status
+			r |> Amnesia.Selecion.values	
+		end
+	end
    
         @doc """
              Returns the timestamp of the last record from the database
@@ -62,14 +71,28 @@ defdatabase Database do
 	end
 
 	def last(n, []) when is_integer(n) do
-		last(n-1, [Wpis.get(Wpis.getLast)])
+		l = Wpis.get(Wpis.getLast)
+		last(n-1, [l])
 	end
-	
+
+	def last_st([]) do
+		[]
+	end
+
+	def last_st(l) do
+		s = List.last(l).status
+		if List.first(l).status == s do
+			[head|tail] = l
+			last_st(tail)
+		end
+                
+	end
+ 	
 	def last(n, t) when is_integer(n) do		
 		Amnesia.transaction do
 			[head|tail] = t
 			w = Wpis.get(Wpis.prev(head.timestamp))
-			if w != nil do	
+			if w != nil do
 				t = [w|t]
 				last(n-1, t)
 			else
@@ -80,7 +103,7 @@ defdatabase Database do
 	end
 		
 
-
+    
 	            
         @doc """
             Adds and saves a Wpis in the database
