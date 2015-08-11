@@ -56,7 +56,27 @@ defdatabase Database do
 	def isWpis(zmienna) do
 		is_map(zmienna) and zmienna.__struct__ == Wpis
 	end
-            
+
+	def last(0, t) do
+		t
+	end
+
+	def last(n, []) when is_integer(n) do
+		last(n-1, [Wpis.get(Wpis.getLast)])
+	end
+	
+	def last(n, t) when is_integer(n) and is_list(t) do		
+		Amnesia.transaction do
+			[head|tail] = t
+			t = [Wpis.get(Wpis.prev(head.timestamp))|t]
+			last(n-1, t)
+			t
+		end
+	end
+		
+
+
+	            
         @doc """
             Adds and saves a Wpis in the database
             """
