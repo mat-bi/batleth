@@ -65,12 +65,17 @@ defdatabase Database do
 		last(n-1, [Wpis.get(Wpis.getLast)])
 	end
 	
-	def last(n, t) when is_integer(n) and is_list(t) do		
+	def last(n, t) when is_integer(n) do		
 		Amnesia.transaction do
 			[head|tail] = t
-			t = [Wpis.get(Wpis.prev(head.timestamp))|t]
-			last(n-1, t)
-			t
+			w = Wpis.get(Wpis.prev(head.timestamp))
+			if w != nil do	
+				t = [w|t]
+				last(n-1, t)
+			else
+				t
+			end
+
 		end
 	end
 		
