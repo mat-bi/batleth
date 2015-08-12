@@ -14,59 +14,71 @@
 6 verbose install     'uglify-js-brunch' ] ]
 7 verbose from cache /home/janek/batleth/apps/batleth_server/package.json
 8 info preinstall @
-9 verbose read json /home/janek/batleth/apps/batleth_server/node_modules/clean-css-brunch/package.json
-10 verbose read json /home/janek/batleth/apps/batleth_server/node_modules/javascript-brunch/package.json
-11 verbose read json /home/janek/batleth/apps/batleth_server/node_modules/css-brunch/package.json
-12 verbose read json /home/janek/batleth/apps/batleth_server/node_modules/brunch/package.json
-13 verbose read json /home/janek/batleth/apps/batleth_server/node_modules/uglify-js-brunch/package.json
-14 verbose read json /home/janek/batleth/apps/batleth_server/node_modules/babel-brunch/package.json
-15 verbose read json /home/janek/batleth/apps/batleth_server/node_modules/sass-brunch/package.json
-16 verbose from cache /home/janek/batleth/apps/batleth_server/package.json
-17 verbose readDependencies using package.json deps
-18 verbose from cache /home/janek/batleth/apps/batleth_server/node_modules/clean-css-brunch/package.json
-19 verbose from cache /home/janek/batleth/apps/batleth_server/node_modules/javascript-brunch/package.json
-20 verbose from cache /home/janek/batleth/apps/batleth_server/node_modules/css-brunch/package.json
-21 verbose from cache /home/janek/batleth/apps/batleth_server/node_modules/brunch/package.json
-22 verbose from cache /home/janek/batleth/apps/batleth_server/node_modules/uglify-js-brunch/package.json
-23 verbose from cache /home/janek/batleth/apps/batleth_server/node_modules/babel-brunch/package.json
-24 verbose from cache /home/janek/batleth/apps/batleth_server/node_modules/sass-brunch/package.json
-25 verbose cache add [ 'brunch@^1.8.3', null ]
-26 verbose cache add name=undefined spec="brunch@^1.8.3" args=["brunch@^1.8.3",null]
-27 verbose parsed url { pathname: 'brunch@^1.8.3',
-27 verbose parsed url   path: 'brunch@^1.8.3',
-27 verbose parsed url   href: 'brunch@^1.8.3' }
-28 verbose cache add name="brunch" spec="^1.8.3" args=["brunch","^1.8.3"]
-29 verbose parsed url { pathname: '^1.8.3', path: '^1.8.3', href: '^1.8.3' }
-30 verbose addNamed [ 'brunch', '^1.8.3' ]
-31 verbose addNamed [ null, null ]
-32 verbose cache add [ 'babel-brunch@^5.1.1', null ]
-33 verbose cache add name=undefined spec="babel-brunch@^5.1.1" args=["babel-brunch@^5.1.1",null]
-34 verbose parsed url { pathname: 'babel-brunch@^5.1.1',
-34 verbose parsed url   path: 'babel-brunch@^5.1.1',
-34 verbose parsed url   href: 'babel-brunch@^5.1.1' }
-35 verbose cache add name="babel-brunch" spec="^5.1.1" args=["babel-brunch","^5.1.1"]
-36 verbose parsed url { pathname: '^5.1.1', path: '^5.1.1', href: '^5.1.1' }
-37 verbose addNamed [ 'babel-brunch', '^5.1.1' ]
-38 verbose addNamed [ null, null ]
-39 verbose already installed skipping clean-css-brunch@>= 1.0 < 1.8 /home/janek/batleth/apps/batleth_server
-40 silly lockFile 844d4c1c-brunch-1-8-3 brunch@^1.8.3
-41 verbose lock brunch@^1.8.3 /home/janek/.npm/844d4c1c-brunch-1-8-3.lock
-42 silly lockFile 70eef9b4-babel-brunch-5-1-1 babel-brunch@^5.1.1
-43 verbose lock babel-brunch@^5.1.1 /home/janek/.npm/70eef9b4-babel-brunch-5-1-1.lock
-44 info addNameTag [ 'brunch', '^1.8.3' ]
-45 info addNameTag [ 'babel-brunch', '^5.1.1' ]
-46 verbose url raw brunch
-47 verbose url resolving [ 'https://registry.npmjs.org/', './brunch' ]
-48 verbose url resolved https://registry.npmjs.org/brunch
-49 info trying registry request attempt 1 at 15:04:18
-50 http GET https://registry.npmjs.org/brunch
-51 verbose url raw babel-brunch
-52 verbose url resolving [ 'https://registry.npmjs.org/', './babel-brunch' ]
-53 verbose url resolved https://registry.npmjs.org/babel-brunch
-54 info trying registry request attempt 1 at 15:04:18
-55 http GET https://registry.npmjs.org/babel-brunch
-56 verbose already installed skipping css-brunch@>= 1.0 < 1.8 /home/janek/batleth/apps/batleth_server
-57 verbose already installed skipping javascript-brunch@>= 1.0 < 1.8 /home/janek/batleth/apps/batleth_server
+9 verbose from cache /home/janek/batleth/apps/batleth_server/package.json
+10 verbose readDependencies using package.json deps
+11 verbose cache add [ 'brunch@^1.8.3', null ]
+12 verbose cache add name=undefined spec="brunch@^1.8.3" args=["brunch@^1.8.3",null]
+13 verbose parsed url { pathname: 'brunch@^1.8.3',
+13 verbose parsed url   path: 'brunch@^1.8.3',
+13 verbose parsed url   href: 'brunch@^1.8.3' }
+14 verbose cache add name="brunch" spec="^1.8.3" args=["brunch","^1.8.3"]
+15 verbose parsed url { pathname: '^1.8.3', path: '^1.8.3', href: '^1.8.3' }
+16 verbose addNamed [ 'brunch', '^1.8.3' ]
+17 verbose addNamed [ null, null ]
+18 verbose cache add [ 'babel-brunch@^5.1.1', null ]
+19 verbose cache add name=undefined spec="babel-brunch@^5.1.1" args=["babel-brunch@^5.1.1",null]
+20 verbose parsed url { pathname: 'babel-brunch@^5.1.1',
+20 verbose parsed url   path: 'babel-brunch@^5.1.1',
+20 verbose parsed url   href: 'babel-brunch@^5.1.1' }
+21 verbose cache add name="babel-brunch" spec="^5.1.1" args=["babel-brunch","^5.1.1"]
+22 verbose parsed url { pathname: '^5.1.1', path: '^5.1.1', href: '^5.1.1' }
+23 verbose addNamed [ 'babel-brunch', '^5.1.1' ]
+24 verbose addNamed [ null, null ]
+25 silly lockFile 844d4c1c-brunch-1-8-3 brunch@^1.8.3
+26 verbose lock brunch@^1.8.3 /home/janek/.npm/844d4c1c-brunch-1-8-3.lock
+27 silly lockFile 70eef9b4-babel-brunch-5-1-1 babel-brunch@^5.1.1
+28 verbose lock babel-brunch@^5.1.1 /home/janek/.npm/70eef9b4-babel-brunch-5-1-1.lock
+29 info addNameTag [ 'brunch', '^1.8.3' ]
+30 info addNameTag [ 'babel-brunch', '^5.1.1' ]
+31 verbose cache add [ 'clean-css-brunch@>= 1.0 < 1.8', null ]
+32 verbose cache add name=undefined spec="clean-css-brunch@>= 1.0 < 1.8" args=["clean-css-brunch@>= 1.0 < 1.8",null]
+33 verbose parsed url { pathname: 'clean-css-brunch@%3E=%201.0%20%3C%201.8',
+33 verbose parsed url   path: 'clean-css-brunch@%3E=%201.0%20%3C%201.8',
+33 verbose parsed url   href: 'clean-css-brunch@%3E=%201.0%20%3C%201.8' }
+34 verbose cache add name="clean-css-brunch" spec=">= 1.0 < 1.8" args=["clean-css-brunch",">= 1.0 < 1.8"]
+35 verbose parsed url { pathname: '%3E=%201.0%20%3C%201.8',
+35 verbose parsed url   path: '%3E=%201.0%20%3C%201.8',
+35 verbose parsed url   href: '%3E=%201.0%20%3C%201.8' }
+36 verbose addNamed [ 'clean-css-brunch', '>= 1.0 < 1.8' ]
+37 verbose addNamed [ null, '>=1.0.0- <1.8.0-' ]
+38 silly lockFile a4ef8c74-clean-css-brunch-1-0-1-8 clean-css-brunch@>= 1.0 < 1.8
+39 verbose lock clean-css-brunch@>= 1.0 < 1.8 /home/janek/.npm/a4ef8c74-clean-css-brunch-1-0-1-8.lock
+40 verbose cache add [ 'css-brunch@>= 1.0 < 1.8', null ]
+41 verbose cache add name=undefined spec="css-brunch@>= 1.0 < 1.8" args=["css-brunch@>= 1.0 < 1.8",null]
+42 verbose parsed url { pathname: 'css-brunch@%3E=%201.0%20%3C%201.8',
+42 verbose parsed url   path: 'css-brunch@%3E=%201.0%20%3C%201.8',
+42 verbose parsed url   href: 'css-brunch@%3E=%201.0%20%3C%201.8' }
+43 verbose cache add name="css-brunch" spec=">= 1.0 < 1.8" args=["css-brunch",">= 1.0 < 1.8"]
+44 verbose parsed url { pathname: '%3E=%201.0%20%3C%201.8',
+44 verbose parsed url   path: '%3E=%201.0%20%3C%201.8',
+44 verbose parsed url   href: '%3E=%201.0%20%3C%201.8' }
+45 verbose addNamed [ 'css-brunch', '>= 1.0 < 1.8' ]
+46 verbose addNamed [ null, '>=1.0.0- <1.8.0-' ]
+47 silly lockFile 63340fb0-css-brunch-1-0-1-8 css-brunch@>= 1.0 < 1.8
+48 verbose lock css-brunch@>= 1.0 < 1.8 /home/janek/.npm/63340fb0-css-brunch-1-0-1-8.lock
+49 verbose cache add [ 'javascript-brunch@>= 1.0 < 1.8', null ]
+50 verbose cache add name=undefined spec="javascript-brunch@>= 1.0 < 1.8" args=["javascript-brunch@>= 1.0 < 1.8",null]
+51 verbose parsed url { pathname: 'javascript-brunch@%3E=%201.0%20%3C%201.8',
+51 verbose parsed url   path: 'javascript-brunch@%3E=%201.0%20%3C%201.8',
+51 verbose parsed url   href: 'javascript-brunch@%3E=%201.0%20%3C%201.8' }
+52 verbose cache add name="javascript-brunch" spec=">= 1.0 < 1.8" args=["javascript-brunch",">= 1.0 < 1.8"]
+53 verbose parsed url { pathname: '%3E=%201.0%20%3C%201.8',
+53 verbose parsed url   path: '%3E=%201.0%20%3C%201.8',
+53 verbose parsed url   href: '%3E=%201.0%20%3C%201.8' }
+54 verbose addNamed [ 'javascript-brunch', '>= 1.0 < 1.8' ]
+55 verbose addNamed [ null, '>=1.0.0- <1.8.0-' ]
+56 silly lockFile cc07cd62-javascript-brunch-1-0-1-8 javascript-brunch@>= 1.0 < 1.8
+57 verbose lock javascript-brunch@>= 1.0 < 1.8 /home/janek/.npm/cc07cd62-javascript-brunch-1-0-1-8.lock
 58 verbose cache add [ 'sass-brunch@^1.8.10', null ]
 59 verbose cache add name=undefined spec="sass-brunch@^1.8.10" args=["sass-brunch@^1.8.10",null]
 60 verbose parsed url { pathname: 'sass-brunch@^1.8.10',
@@ -78,46 +90,135 @@
 64 verbose addNamed [ null, null ]
 65 silly lockFile b88f0efc-sass-brunch-1-8-10 sass-brunch@^1.8.10
 66 verbose lock sass-brunch@^1.8.10 /home/janek/.npm/b88f0efc-sass-brunch-1-8-10.lock
-67 verbose already installed skipping uglify-js-brunch@>= 1.0 < 1.8 /home/janek/batleth/apps/batleth_server
-68 info addNameTag [ 'sass-brunch', '^1.8.10' ]
-69 verbose url raw sass-brunch
-70 verbose url resolving [ 'https://registry.npmjs.org/', './sass-brunch' ]
-71 verbose url resolved https://registry.npmjs.org/sass-brunch
-72 info trying registry request attempt 1 at 15:04:18
-73 http GET https://registry.npmjs.org/sass-brunch
-74 http 200 https://registry.npmjs.org/babel-brunch
-75 silly registry.get cb [ 200,
-75 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-75 silly registry.get     etag: '"915ING937LVJRSABS23RJGWC5"',
-75 silly registry.get     'content-type': 'application/json',
-75 silly registry.get     'cache-control': 'max-age=60',
-75 silly registry.get     'content-length': '8845',
-75 silly registry.get     'accept-ranges': 'bytes',
-75 silly registry.get     date: 'Mon, 10 Aug 2015 13:04:18 GMT',
-75 silly registry.get     via: '1.1 varnish',
-75 silly registry.get     age: '0',
-75 silly registry.get     connection: 'keep-alive',
-75 silly registry.get     'x-served-by': 'cache-fra1221-FRA',
-75 silly registry.get     'x-cache': 'MISS',
-75 silly registry.get     'x-cache-hits': '0',
-75 silly registry.get     'x-timer': 'S1439211858.781651,VS0,VE173',
-75 silly registry.get     vary: 'Accept' } ]
-76 silly lockFile 70eef9b4-babel-brunch-5-1-1 babel-brunch@^5.1.1
-77 silly lockFile 70eef9b4-babel-brunch-5-1-1 babel-brunch@^5.1.1
-78 error Error: No compatible version found: babel-brunch@'^5.1.1'
-78 error Valid install targets:
-78 error ["4.0.0","5.0.0","5.0.1","5.1.0","5.1.1","5.1.2"]
-78 error     at installTargetsError (/usr/lib/nodejs/npm/lib/cache.js:679:10)
-78 error     at /usr/lib/nodejs/npm/lib/cache.js:594:10
-78 error     at saved (/usr/lib/nodejs/npm/node_modules/npm-registry-client/lib/get.js:138:7)
-78 error     at Object.oncomplete (fs.js:297:15)
-79 error If you need help, you may report this log at:
-79 error     <http://github.com/isaacs/npm/issues>
-79 error or email it to:
-79 error     <npm-@googlegroups.com>
-80 error System Linux 3.2.0-88-generic
-81 error command "nodejs" "/usr/bin/npm" "install"
-82 error cwd /home/janek/batleth/apps/batleth_server
-83 error node -v v0.8.20
-84 error npm -v 1.2.11
-85 verbose exit [ 1, true ]
+67 verbose cache add [ 'uglify-js-brunch@>= 1.0 < 1.8', null ]
+68 verbose cache add name=undefined spec="uglify-js-brunch@>= 1.0 < 1.8" args=["uglify-js-brunch@>= 1.0 < 1.8",null]
+69 verbose parsed url { pathname: 'uglify-js-brunch@%3E=%201.0%20%3C%201.8',
+69 verbose parsed url   path: 'uglify-js-brunch@%3E=%201.0%20%3C%201.8',
+69 verbose parsed url   href: 'uglify-js-brunch@%3E=%201.0%20%3C%201.8' }
+70 verbose cache add name="uglify-js-brunch" spec=">= 1.0 < 1.8" args=["uglify-js-brunch",">= 1.0 < 1.8"]
+71 verbose parsed url { pathname: '%3E=%201.0%20%3C%201.8',
+71 verbose parsed url   path: '%3E=%201.0%20%3C%201.8',
+71 verbose parsed url   href: '%3E=%201.0%20%3C%201.8' }
+72 verbose addNamed [ 'uglify-js-brunch', '>= 1.0 < 1.8' ]
+73 verbose addNamed [ null, '>=1.0.0- <1.8.0-' ]
+74 silly lockFile a1de250c-uglify-js-brunch-1-0-1-8 uglify-js-brunch@>= 1.0 < 1.8
+75 verbose lock uglify-js-brunch@>= 1.0 < 1.8 /home/janek/.npm/a1de250c-uglify-js-brunch-1-0-1-8.lock
+76 silly addNameRange { name: 'clean-css-brunch',
+76 silly addNameRange   range: '>=1.0.0- <1.8.0-',
+76 silly addNameRange   hasData: false }
+77 silly addNameRange { name: 'css-brunch', range: '>=1.0.0- <1.8.0-', hasData: false }
+78 silly addNameRange { name: 'javascript-brunch',
+78 silly addNameRange   range: '>=1.0.0- <1.8.0-',
+78 silly addNameRange   hasData: false }
+79 info addNameTag [ 'sass-brunch', '^1.8.10' ]
+80 silly addNameRange { name: 'uglify-js-brunch',
+80 silly addNameRange   range: '>=1.0.0- <1.8.0-',
+80 silly addNameRange   hasData: false }
+81 verbose url raw clean-css-brunch
+82 verbose url resolving [ 'https://registry.npmjs.org/', './clean-css-brunch' ]
+83 verbose url resolved https://registry.npmjs.org/clean-css-brunch
+84 info trying registry request attempt 1 at 16:15:34
+85 http GET https://registry.npmjs.org/clean-css-brunch
+86 verbose url raw css-brunch
+87 verbose url resolving [ 'https://registry.npmjs.org/', './css-brunch' ]
+88 verbose url resolved https://registry.npmjs.org/css-brunch
+89 info trying registry request attempt 1 at 16:15:34
+90 http GET https://registry.npmjs.org/css-brunch
+91 verbose url raw javascript-brunch
+92 verbose url resolving [ 'https://registry.npmjs.org/', './javascript-brunch' ]
+93 verbose url resolved https://registry.npmjs.org/javascript-brunch
+94 info trying registry request attempt 1 at 16:15:34
+95 http GET https://registry.npmjs.org/javascript-brunch
+96 verbose url raw uglify-js-brunch
+97 verbose url resolving [ 'https://registry.npmjs.org/', './uglify-js-brunch' ]
+98 verbose url resolved https://registry.npmjs.org/uglify-js-brunch
+99 info trying registry request attempt 1 at 16:15:34
+100 http GET https://registry.npmjs.org/uglify-js-brunch
+101 verbose url raw brunch
+102 verbose url resolving [ 'https://registry.npmjs.org/', './brunch' ]
+103 verbose url resolved https://registry.npmjs.org/brunch
+104 info trying registry request attempt 1 at 16:15:34
+105 verbose etag "9071CV366OX4DM2RWGDL2K84F"
+106 http GET https://registry.npmjs.org/brunch
+107 verbose url raw babel-brunch
+108 verbose url resolving [ 'https://registry.npmjs.org/', './babel-brunch' ]
+109 verbose url resolved https://registry.npmjs.org/babel-brunch
+110 info trying registry request attempt 1 at 16:15:34
+111 verbose etag "915ING937LVJRSABS23RJGWC5"
+112 http GET https://registry.npmjs.org/babel-brunch
+113 http 200 https://registry.npmjs.org/clean-css-brunch
+114 silly registry.get cb [ 200,
+114 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+114 silly registry.get     etag: '"9U92WK9N2J0M45E90BGP5WP5"',
+114 silly registry.get     'content-type': 'application/json',
+114 silly registry.get     'cache-control': 'max-age=60',
+114 silly registry.get     'content-length': '13700',
+114 silly registry.get     'accept-ranges': 'bytes',
+114 silly registry.get     date: 'Tue, 11 Aug 2015 14:15:35 GMT',
+114 silly registry.get     via: '1.1 varnish',
+114 silly registry.get     age: '0',
+114 silly registry.get     connection: 'keep-alive',
+114 silly registry.get     'x-served-by': 'cache-fra1236-FRA',
+114 silly registry.get     'x-cache': 'HIT',
+114 silly registry.get     'x-cache-hits': '1',
+114 silly registry.get     'x-timer': 'S1439302535.554722,VS0,VE102',
+114 silly registry.get     vary: 'Accept' } ]
+115 http 304 https://registry.npmjs.org/babel-brunch
+116 silly registry.get cb [ 304,
+116 silly registry.get   { date: 'Tue, 11 Aug 2015 14:15:35 GMT',
+116 silly registry.get     via: '1.1 varnish',
+116 silly registry.get     'cache-control': 'max-age=60',
+116 silly registry.get     etag: '"915ING937LVJRSABS23RJGWC5"',
+116 silly registry.get     age: '0',
+116 silly registry.get     connection: 'keep-alive',
+116 silly registry.get     'x-served-by': 'cache-fra1236-FRA',
+116 silly registry.get     'x-cache': 'HIT',
+116 silly registry.get     'x-cache-hits': '1',
+116 silly registry.get     'x-timer': 'S1439302535.764333,VS0,VE100',
+116 silly registry.get     vary: 'Accept' } ]
+117 verbose etag babel-brunch from cache
+118 verbose url raw sass-brunch
+119 verbose url resolving [ 'https://registry.npmjs.org/', './sass-brunch' ]
+120 verbose url resolved https://registry.npmjs.org/sass-brunch
+121 info trying registry request attempt 1 at 16:15:35
+122 verbose etag "4N3LR17AZ9V9VHX2FLDG9PI90"
+123 http GET https://registry.npmjs.org/sass-brunch
+124 silly addNameRange number 2 { name: 'clean-css-brunch',
+124 silly addNameRange   range: '>=1.0.0- <1.8.0-',
+124 silly addNameRange   hasData: true }
+125 silly addNameRange versions [ 'clean-css-brunch',
+125 silly addNameRange   [ '1.0.0',
+125 silly addNameRange     '1.1.0',
+125 silly addNameRange     '1.1.1',
+125 silly addNameRange     '1.3.0',
+125 silly addNameRange     '1.4.0',
+125 silly addNameRange     '1.5.0',
+125 silly addNameRange     '1.5.1',
+125 silly addNameRange     '1.6.0',
+125 silly addNameRange     '1.7.0',
+125 silly addNameRange     '1.7.1',
+125 silly addNameRange     '1.7.2' ] ]
+126 verbose addNamed [ 'clean-css-brunch', '1.7.2' ]
+127 verbose addNamed [ '1.7.2', '1.7.2' ]
+128 silly lockFile 343b1949-clean-css-brunch-1-7-2 clean-css-brunch@1.7.2
+129 verbose lock clean-css-brunch@1.7.2 /home/janek/.npm/343b1949-clean-css-brunch-1-7-2.lock
+130 silly lockFile 70eef9b4-babel-brunch-5-1-1 babel-brunch@^5.1.1
+131 silly lockFile 70eef9b4-babel-brunch-5-1-1 babel-brunch@^5.1.1
+132 verbose read json /home/janek/.npm/clean-css-brunch/1.7.2/package/package.json
+133 error Error: No compatible version found: babel-brunch@'^5.1.1'
+133 error Valid install targets:
+133 error ["4.0.0","5.0.0","5.0.1","5.1.0","5.1.1","5.1.2"]
+133 error     at installTargetsError (/usr/lib/nodejs/npm/lib/cache.js:679:10)
+133 error     at /usr/lib/nodejs/npm/lib/cache.js:594:10
+133 error     at saved (/usr/lib/nodejs/npm/node_modules/npm-registry-client/lib/get.js:138:7)
+133 error     at Object.oncomplete (fs.js:297:15)
+134 error If you need help, you may report this log at:
+134 error     <http://github.com/isaacs/npm/issues>
+134 error or email it to:
+134 error     <npm-@googlegroups.com>
+135 error System Linux 3.2.0-88-generic
+136 error command "nodejs" "/usr/bin/npm" "install"
+137 error cwd /home/janek/batleth/apps/batleth_server
+138 error node -v v0.8.20
+139 error npm -v 1.2.11
+140 verbose exit [ 1, true ]
