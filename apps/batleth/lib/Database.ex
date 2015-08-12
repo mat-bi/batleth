@@ -26,10 +26,11 @@ defdatabase Database do
 
 	
 	def lastWpises() do
-		r = get(getLast)
+		IO.inspect r = get(getLast)
+		
 		Amnesia.transaction do
-			r = where timestamp >= r.timestamp-1800 and timestamp >= LastChange.get and status == r.status
-			r |> Amnesia.Selecion.values	
+			r = where timestamp >= r.timestamp-1800 and timestamp >= LastChange.get.timestamp and status == r.status
+			Amnesia.Selection.values(r)	
 		end
 	end
    
