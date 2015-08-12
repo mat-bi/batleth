@@ -57,6 +57,14 @@ defmodule BatteryReader do
 			
 	end
 
+	@doc ~S"""
+		Parses a battery status from string to integer.
+
+		##Examples
+		
+		iex> BatteryReader.parse_status("Charging\n")
+		0
+	"""
 	defp parse_status(status) do
 		case status do
 			"Charging\n" -> 0

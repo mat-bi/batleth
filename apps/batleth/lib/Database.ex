@@ -16,7 +16,7 @@ defdatabase Database do
         end
 
 	@doc """
-		Gets and returns the record with timestamp, used as a parameter. Returns a %Database.Wpis struct
+		Gets and returns the record with timestamp, used as a parameter. Returns a %Database.Wpis struct.
 	"""
 	def get(tmp) do
 		Amnesia.transaction do
@@ -33,8 +33,16 @@ defdatabase Database do
 		end
 	end
    
-        @doc """
-             Returns the timestamp of the last record from the database
+        @doc ~S"""
+             Returns the timestamp of the last record from the database.
+
+	     	## Examples
+
+    		iex> Wpis.add(%Wpis{pr: 54, timestamp: 143, status: 0})
+    		%Wpis{pr: 54, timestamp: 143, status: 0}
+    		iex> Wpis.getLast
+    		143
+		
              """
 
         def getLast() do
@@ -45,7 +53,7 @@ defdatabase Database do
 
 
         @doc """
-             Parses percentage and status to a struct Wpis, adding the current timestamp (in sec)
+             Parses percentage and status to a struct Wpis, adding the current timestamp (in sec).
              """
 
         def parse_wpis(percentage, st, tmp \\ :timestamp) do
@@ -106,7 +114,7 @@ defdatabase Database do
     
 	            
         @doc """
-            Adds and saves a Wpis in the database
+            Adds and saves a Wpis in the database.
             """
         def add(self) do
             Amnesia.transaction do

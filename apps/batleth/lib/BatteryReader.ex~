@@ -41,7 +41,7 @@ defmodule BatteryReader do
 						end
 					{:ok, status} -> status = parse_status(status)
 					_ ->  bad_cmd
-					
+						
 				end
 
 				case File.read("/sys/class/power_supply/BAT1/capacity") do
@@ -57,6 +57,13 @@ defmodule BatteryReader do
 			
 	end
 
+	@doc ~S"""
+		Parses a battery status from str
+		##Examples
+		
+		iex> BatteryReader.parse_status("Charging\n")
+		0
+	"""
 	defp parse_status(status) do
 		case status do
 			"Charging\n" -> 0

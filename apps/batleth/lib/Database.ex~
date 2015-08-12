@@ -16,16 +16,33 @@ defdatabase Database do
         end
 
 	@doc """
-		Gets and returns the record with timestamp, used as a parameter. Returns a %Database.Wpis struct
+		Gets and returns the record with timestamp, used as a parameter. Returns a %Database.Wpis struct.
 	"""
 	def get(tmp) do
 		Amnesia.transaction do
 			read(tmp)
 		end
 	end
+
+	
+	def lastWpises() do
+		r = get(getLast)
+		Amnesia.transaction do
+			r = where timestamp >= r.timestamp-1800 and timestamp >= LastChange.get and status == r.status
+			r |> Amnesia.Selecion.values	
+		end
+	end
    
-        @doc """
-             Returns the timestamp of the last record from the database
+        @doc ~S"""
+             Returns the timestamp of the last record from the database.
+
+	     	## Examples
+
+    iex> Wpis.add(%Wpis{pr: 54, timestamp: 143, status: 0})
+    %Wpis{pr: 54, timestamp: 143, status: 0}
+    iex> Wpis.getLast
+    143
+		
              """
 
         def getLast() do
@@ -36,7 +53,7 @@ defdatabase Database do
 
 
         @doc """
-             Parses percentage and status to a struct Wpis, adding the current timestamp (in sec)
+             Parses percentage and status to a struct Wpis, adding the current timestamp (in sec).
              """
 
         def parse_wpis(percentage, st, tmp \\ :timestamp) do
@@ -56,9 +73,48 @@ defdatabase Database do
 	def isWpis(zmienna) do
 		is_map(zmienna) and zmienna.__struct__ == Wpis
 	end
-            
+
+	def last(0, t) do
+		t
+	end
+
+	def last(n, []) when is_integer(n) do
+		l = Wpis.get(Wpis.getLast)
+		last(n-1, [l])
+	end
+
+	def last_st([]) do
+		[]
+	end
+
+	def last_st(l) do
+		s = List.last(l).status
+		if List.first(l).status == s do
+			[head|tail] = l
+			last_st(tail)
+		end
+                
+	end
+ 	
+	def last(n, t) when is_integer(n) do		
+		Amnesia.transaction do
+			[head|tail] = t
+			w = Wpis.get(Wpis.prev(head.timestamp))
+			if w != nil do
+				t = [w|t]
+				last(n-1, t)
+			else
+				t
+			end
+
+		end
+	end
+		
+
+    
+	            
         @doc """
-            Adds and saves a Wpis in the database
+            Adds and saves a Wpis in the database.
             """
         def add(self) do
             Amnesia.transaction do

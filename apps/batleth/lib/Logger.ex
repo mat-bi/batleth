@@ -9,7 +9,7 @@ defmodule Logging do
 		GenServer.start(__MODULE__, [], opts)
 	end
 	#api
-	@doc """
+	@doc ~S"""
 		Writes in the log files. The file is saved in path "/var/log/batleth/:year/:day.log"
 		Example record: 30/07/2015 11:10:58 Database not present
 		Possible errors:
@@ -17,6 +17,14 @@ defmodule Logging do
 			:bad_cmd -> writes "Bad command"
 
 		Responds with {:ok}
+
+		##Examples
+
+		    iex> Logging.write(:no_db)
+		    {:ok}
+
+		    iex> Logging.write(:bad_cmd)
+		    {:ok}
 		"""
 	def write(error) do
 		GenServer.call(opts[:name], {:write, error})
@@ -28,7 +36,7 @@ defmodule Logging do
 	end
 
 	defp fwrite(error) do
-		File.write("/var/log/batleth/#{Time.year}/#{Time.month}.log", Time.date_and_time <> " " <> error<>"\n", [:append])
+		File.write!("/var/log/batleth/#{Time.year}/#{Time.month}.log", Time.date_and_time <> " " <> error<>"\n", [:append])
 	end
 				
 	def handle_call({:write, :no_db}, _, _) do
