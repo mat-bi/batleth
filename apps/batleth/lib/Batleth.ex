@@ -6,13 +6,15 @@ defmodule Batleth do
 		use Amnesia
 		use Database
 		Amnesia.start
-
+                Database.wait
 		import Supervisor.Spec
 		children = [
 			worker(Logging, [[], [name: :logger]]),
 			worker(DatabaseAccess, [[], [name: :base]]),
 			worker(BatteryReader, [[], [name: :battery]]),
-			worker(Clock, [[], [name: :clock]])
+			worker(Clock, [[], [name: :clock]]),
+			worker(Stat, [[], []]),
+			worker(LastChange, [[],[]])
 			]
 		Supervisor.start_link(children, strategy: :one_for_one)
 		#loop()
@@ -28,7 +30,7 @@ defmodule Batleth do
 					case at do
 						:ok ->
 							{:ok, percentage, status} = BatteryReader.read
-							
+							Stat.run(Database.Wpis.parse_wpis(percentage, status), if time_dif > 60 do true else false end)
 							DatabaseAccess.add(%{status: status, pr: percentage})
 							:timer.sleep(60000)	
 

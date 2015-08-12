@@ -8,16 +8,22 @@ defmodule Stat do
 		GenServer.start(__MODULE__,  [] , [name: :stat])
 	end
 
-	def run(from, to) do #Jakie argumenty będzie przyjmować?
+	def run(wpis, tmp) do #Jakie argumenty będzie przyjmować?
 		#Warunki startu - zmiana poziomu naładowania baterii.
 		
-		GenServer.call(@supervision_name, {:run, from, to})
+		GenServer.call(@supervision_name, {:run, wpis, tmp})
 	end
 
 	#Funkcje statystyczne powinny znaleźć się tutaj.
 
-	def handle_call({:run, from, to}, _, _) do
-		a = DatabaseAccess.get(from, to)
+	def handle_call({:run, wpis, tmp}, _, _) do
+		if LastChange.get().status != wpis.status or tmp == true or LastChange.is_reset() do
+			LastChange.change(wpis)
+		end 
+                {:reply, :ok, []}
+	end
+        defp make() do
+		a = DatabaseAccess.get(0,0)
 		[head|tail] = a
 		l = length a
 		{:ok, average_timestamp } = GNumber.start_link()
