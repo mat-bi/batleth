@@ -1,4 +1,7 @@
 defmodule GNumber do
+	@doc """
+		Allows using 'global variables' - floats or integers.
+	"""
 
 	def start_link() do
 		Task.start_link(fn() -> loop(0) end)

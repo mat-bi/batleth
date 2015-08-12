@@ -1,3 +1,7 @@
+@doc """
+	Allows using 'global variables' - floats or integers.
+"""
+
 defmodule GNumber do
 
 	def start_link() do

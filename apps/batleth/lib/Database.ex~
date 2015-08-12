@@ -5,8 +5,22 @@ defdatabase Database do
     deftable Wpis, [ :timestamp, :status, :pr ], type: :ordered_set do
         @type t :: %Wpis{timestamp: non_neg_integer, status: non_neg_integer, pr: non_neg_integer}
         
-        @doc """
+        @doc ~S"""
             Gets a list of records from timestamp to timestamp. Returns a list of %Database.Wpis struct.
+
+		## Examples
+
+		iex> Wpis.get(1439383684, 1439389895)
+		[%Database.Wpis{pr: 40, status: 0, timestamp: 1439383684},
+ 		 %Database.Wpis{pr: 40, status: 0, timestamp: 1439383744},
+ 		 %Database.Wpis{pr: 0, status: 4, timestamp: 1439389660},
+ 		 %Database.Wpis{pr: 0, status: 4, timestamp: 1439389739},
+ 		 %Database.Wpis{pr: 0, status: 4, timestamp: 1439389799},
+ 		 %Database.Wpis{pr: 0, status: 4, timestamp: 1439389859}]
+
+		iex> Wpis.get(1439365465, 1439366465) 
+		[]
+
             """
         def get(tmp2, tmp3) do
             Amnesia.transaction do
@@ -15,8 +29,16 @@ defdatabase Database do
             end
         end
 
-	@doc """
+	@doc ~S"""
 		Gets and returns the record with timestamp, used as a parameter. Returns a %Database.Wpis struct.
+
+		## Examples
+		
+		iex> Wpis.get(1439383744)
+		%Database.Wpis{pr: 40, status: 0, timestamp: 1439383744}
+
+		iex> Wpis.get(1439390781)
+		%Database.Wpis{pr: 0, status: 4, timestamp: 1439390781}
 	"""
 	def get(tmp) do
 		Amnesia.transaction do
@@ -24,12 +46,30 @@ defdatabase Database do
 		end
 	end
 
-	
+	@doc ~S"""
+		Gets and returns a list of records [Wpis] with the same status as the current, that have been saved in the last (at most) 30 minutes, but newer than last change 			of the battery status.
+		
+		## Examples
+		
+		iex> Wpis.lastWpises
+		[%Database.Wpis{pr: 0, status: 4, timestamp: 1439390541},
+ 		 %Database.Wpis{pr: 0, status: 4, timestamp: 1439390601},
+ 		 %Database.Wpis{pr: 0, status: 4, timestamp: 1439390661},
+ 		 %Database.Wpis{pr: 0, status: 4, timestamp: 1439390721},
+ 		 %Database.Wpis{pr: 0, status: 4, timestamp: 1439390781},
+ 		 %Database.Wpis{pr: 0, status: 4, timestamp: 1439390841},
+ 		 %Database.Wpis{pr: 0, status: 4, timestamp: 1439390901},
+ 		 %Database.Wpis{pr: 0, status: 4, timestamp: 1439390961},
+ 		 %Database.Wpis{pr: 0, status: 4, timestamp: 1439391021},
+ 		 %Database.Wpis{pr: 0, status: 4, timestamp: 1439391081},
+ 		 %Database.Wpis{pr: 0, status: 4, timestamp: 1439391141}]
+
+	"""
 	def lastWpises() do
 		IO.inspect r = get(getLast)
 		
 		Amnesia.transaction do
-			r = where timestamp >= r.timestamp-1800 #and timestamp >= LastChange.get and status == r.status
+			r = where timestamp >= r.timestamp-1800 and timestamp >= LastChange.get.timestamp and status == r.status
 			Amnesia.Selection.values(r)	
 		end
 	end
@@ -45,7 +85,6 @@ defdatabase Database do
     		143
 		
              """
-
         def getLast() do
             Amnesia.transaction do
                 Wpis.last(true)
@@ -124,6 +163,10 @@ defdatabase Database do
         end
     end
 
+
+	@doc """
+		A table with
+	"""
 	deftable Prosta, [ :timestamp, :a, :b ], type: :ordered_set do
 		@type t :: %Prosta{timestamp: non_neg_integer, a: Float , b: Float}
 	
@@ -148,7 +191,7 @@ defdatabase Database do
         	end
 
 		@doc """
-            		Adds and saves a record in the database.
+            		Adds and saves a record [%Database.Prosta struct] in the database.
             	"""
 		def prosta_add(self) do
            		Amnesia.transaction do

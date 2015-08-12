@@ -8,13 +8,9 @@ defmodule Stat do
 		GenServer.start(__MODULE__,  [] , [name: :stat])
 	end
 
-	def run(wpis, tmp) do #Jakie argumenty będzie przyjmować?
-		#Warunki startu - zmiana poziomu naładowania baterii.
-		
+	def run(wpis, tmp) do		
 		GenServer.call(@supervision_name, {:run, wpis, tmp})
 	end
-
-	#Funkcje statystyczne powinny znaleźć się tutaj.
 
 	def handle_call({:run, wpis, tmp}, _, _) do
 		if LastChange.get().status != wpis.status or tmp == true or LastChange.is_reset() do
@@ -22,6 +18,16 @@ defmodule Stat do
 		end 
                 {:reply, :ok, []}
 	end
+
+	
+	@doc """
+		Makes some statistics for the given records: calculates expected value of the timestamp (average timestamp),
+		expected value of the percentage (average percentage), expected value of the timestamp and the percentage (average (timestamp*percentage)),
+		variance of the timestamp, variance of the percentage, covariance of the timestamp and the percentage,
+		correlation of the timestamp and the percentage and, finally, simple linear regression.
+
+		Returns a and b values from formula of simple linear regression: y = ax + b.	
+	"""
         defp make() do
 		a = DatabaseAccess.get(0,0)
 		[head|tail] = a
@@ -82,7 +88,7 @@ defmodule Stat do
 		a = cor*:math.sqrt(var_percentage/var_timestamp)
 		b = average_percentage-a*(average_timestamp+head.timestamp)
 
-		{:reply, {-b/a}, []}
+		{:reply, {a, b}, []}
 			
 	end
 	
