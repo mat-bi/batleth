@@ -18,6 +18,12 @@ Batleth
 
 -> Logger.ex -> logger of the app
 
+-> Stat.ex -> a module that calculates some statistics on the battery
+
+-> LastChange.ex -> a module that is very useful
+
+-> Time.ex -> a module with very useful time functions
+
 ##First run
 Use file make.sh to install the app. It copies the files, creates directories etc. It must be run by a root - otherwise it won't do anything.
 
@@ -34,7 +40,5 @@ Works:
 	+ File to start and stop the app in Ubuntu
 
 Doesn't work
-
-	- Can be only run by a root	
 
 	- Running with the start of the system 
