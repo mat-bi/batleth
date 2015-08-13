@@ -29,6 +29,14 @@ defmodule DatabaseAccess do
 		GenServer.call(@supervision_name, {:getLast, n})
 	end
 
+	def lastWpises() do
+		GenServer.call(@supervision_name, {:lastWpises})
+	end
+
+	def handle_call({:lastWpises}, _, _) do
+		{:reply, Wpis.lastWpises(), [])
+	end
+
 	def handle_call({:getLast, n}, _, _) when is_integer(n) do
 		{:reply, Wpis.last(n, []), []}
 	end

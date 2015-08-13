@@ -164,9 +164,6 @@ defdatabase Database do
     end
 
 
-	@doc """
-		A table with
-	"""
 	deftable Prosta, [ :timestamp, :a, :b ], type: :ordered_set do
 		@type t :: %Prosta{timestamp: non_neg_integer, a: Float , b: Float}
 	
@@ -174,7 +171,7 @@ defdatabase Database do
 		@doc """
 			Gets and returns the record with timestamp, used as a parameter. Returns a %Database.Prosta struct.
 		"""
-		def prosta_get(tmp) do
+		def get(tmp) do
 			Amnesia.transaction do
 				read(tmp)
 			end
@@ -183,17 +180,27 @@ defdatabase Database do
 		@doc """
             		Gets a list of records from timestamp to timestamp. Returns a list of %Database.Prosta struct.
             	"""
-		def prosta_get(tmp2, tmp3) do
+		def get(tmp2, tmp3) do
             		Amnesia.transaction do
                			r = where timestamp >= tmp2 and timestamp <= tmp3
                			Amnesia.Selection.values(r)
             		end
         	end
 
+		def getLast() do
+			Amnesia.transaction do
+				Prosta.last(true)
+			end
+		end
+
+
+				
+
+
 		@doc """
             		Adds and saves a record [%Database.Prosta struct] in the database.
             	"""
-		def prosta_add(self) do
+		def add(self) do
            		Amnesia.transaction do
                 		write(self)
            		end

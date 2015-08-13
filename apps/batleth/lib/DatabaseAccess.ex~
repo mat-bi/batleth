@@ -24,6 +24,22 @@ defmodule DatabaseAccess do
 	def get(at) do
 		GenServer.call(@supervision_name, {:get, at})
 	end
+
+	def getLast(n) do
+		GenServer.call(@supervision_name, {:getLast, n})
+	end
+
+	def lastWpises() do
+		GenServer.call(@supervision_name, {:lastWpises})
+	end
+
+	def handle_call({:lastWpises}, _, _) do
+		{:reply, 
+	end
+
+	def handle_call({:getLast, n}, _, _) when is_integer(n) do
+		{:reply, Wpis.last(n, []), []}
+	end
 	
 	@doc """
 		Get a list of records that meet the conditions: timestamp >= from and timestamp <= to
@@ -38,7 +54,7 @@ defmodule DatabaseAccess do
 	end
 
 	@doc """
-		Adds record to the database. Requires map %{status, pr}. Returns {:ok} when added, {:error, :db} 			otherwise
+		Adds record to the database. Requires map %{status, pr}. Returns {:ok} when added, {:error, :db} otherwise
 		"""
 
 	def add(at) do

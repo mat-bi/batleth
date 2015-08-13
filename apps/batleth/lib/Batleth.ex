@@ -8,6 +8,9 @@ defmodule Batleth do
 		
 		Amnesia.start
                 Database.wait
+
+		
+		{:ok, pid} = Task.start_link(fn -> 
 		import Supervisor.Spec
 		children = [
 			worker(Logging, [[], [name: :logger]]),
@@ -15,11 +18,11 @@ defmodule Batleth do
 			worker(BatteryReader, [[], [name: :battery]]),
 			worker(Clock, [[], [name: :clock]]),
 			worker(Stat, [[], []]),
-			worker(LastChange, [[],[]])
+			worker(LastChange, [[],[]]),
+			worker(DatabaseAccess.Prosta, [[],[]])
 			]
-		Supervisor.start_link(children, strategy: :one_for_one)
-		#loop()
-		{:ok, pid} = Task.start_link(fn -> loop() end)
+		Supervisor.start_link(children, strategy: :one_for_all) 
+		loop() end)
 
 		{:ok, self()}
 	end
@@ -32,7 +35,7 @@ defmodule Batleth do
 						:ok ->
 							{:ok, percentage, status} = BatteryReader.read
 							DatabaseAccess.add(%{status: status, pr: percentage})
-							Stat.run(DatabaseAccess.get(DatabaseAccess.getLast()), if time_dif > 60 do true else false end)
+							Stat.run(DatabaseAccess.getLast(1), if time_dif > 60 do true else false end)
 							:timer.sleep(60000)	
 
 						:wait -> 

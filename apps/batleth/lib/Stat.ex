@@ -13,11 +13,19 @@ defmodule Stat do
 	end
 
 	def handle_cast({:run, wpis, tmp}, _) do
-		if 
-		if LastChange.get().status != wpis.status or tmp == true or LastChange.is_reset() do
-			LastChange.change(wpis)
-		end
-                {:noreply, []}
+		cond do
+			tmp == true or 	
+			pom = LastChange.get().status
+			if ((pom != wpis.status) or (Time.timestamp - DatabaseAccess.Prosta.getLast >= 600)) and !LastChange.is_reset do
+				wp = DatabaseAccess.lastWpises
+			m = make(wp)
+			end
+		
+			if LastChange.get().status != wpis.status or tmp == true or LastChange.is_reset do
+				LastChange.change(wpis)
+			end
+                	{:noreply, []}
+		
 	end
 
 	
@@ -29,8 +37,7 @@ defmodule Stat do
 
 		Returns a and b values from formula of simple linear regression: y = ax + b.	
 	"""
-        defp make() do
-		a = DatabaseAccess.get(0,0)
+        defp make(a) do
 		[head|_] = a
 		l = length a
 		{:ok, average_timestamp } = GNumber.start_link()
