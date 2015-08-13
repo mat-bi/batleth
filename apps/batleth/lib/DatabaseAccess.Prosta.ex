@@ -21,4 +21,12 @@ defmodule DatabaseAccess.Prosta do
 		{:reply, Prosta.getLast, []}
 	end
 
+        def handle_call({:add, prosta}, _, _) when is_map(prosta) do
+                case Prosta.parse_prosta(prosta) |> Wpis.add do
+                        l when is_map(l) -> {:reply, {:ok}, []}
+                        nil -> {:reply, {:error, :db}, []}
+                end
+        end
+                
+
 end

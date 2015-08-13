@@ -45,7 +45,11 @@ defdatabase Database do
 			read(tmp)
 		end
 	end
-
+        def previous() do
+            Amnesia.transaction do
+                Wpis.get(Wpis.prev(Wpis.getLast))
+            end
+        end
 	@doc ~S"""
 		Gets and returns a list of records [Wpis] with the same status as the current, that have been saved in the last (at most) 30 minutes, but newer than last change 			of the battery status.
 		
@@ -66,7 +70,7 @@ defdatabase Database do
 
 	"""
 	def lastWpises() do
-		IO.inspect r = get(getLast)
+		IO.inspect r = previous
 		
 		Amnesia.transaction do
 			r = where timestamp >= r.timestamp-1800 and timestamp >= LastChange.get.timestamp and status == r.status
@@ -194,7 +198,9 @@ defdatabase Database do
 		end
 
 
-				
+		def parse_prosta(%{a: a, b: b}) do
+		    %Prosta{timestamp: Time.timestamp, a: a, b: b}
+                end
 
 
 		@doc """
