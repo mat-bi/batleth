@@ -17,15 +17,17 @@ defmodule Stat do
 		cond do
 			tmp == true or LastChange.is_reset ->
 				LastChange.change(wpis)
-			wpis.status != LastChange.get.status ->
+			wpis.status != LastChange.get.status and length(wp) >= 5 ->
 				mp = make(wp)
 				DatabaseAccess.Prosta.add(mp)
 				LastChange.change(wpis)
-			wpis.pr == LastChange.get.pr ->
-				DatabaseAccess.Prosta.add(%{a: 0, b: wpis.pr})
-			Time.timestamp - DatabaseAccess.Prosta.getLast >= 600  and wp.length >= 3 ->
+			wpis.pr == LastChange.get.pr and length(wp) >= 5 ->
+				mp = %{a: 0, b: wpis.pr}
+				DatabaseAccess.Prosta.add(mp)
+			Time.timestamp - DatabaseAccess.Prosta.getLast >= 600 ->
 				mp = make(wp)
 				DatabaseAccess.Prosta.add(mp)
+			true -> 
 		end
                 {:noreply, []}	
 	end
