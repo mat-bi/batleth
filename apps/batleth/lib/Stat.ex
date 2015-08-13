@@ -13,19 +13,19 @@ defmodule Stat do
 	end
 
 	def handle_cast({:run, wpis, tmp}, _) do
+		wp = DatabaseAccess.lastWpises
 		cond do
-			tmp == true or 	
-			pom = LastChange.get().status
-			if ((pom != wpis.status) or (Time.timestamp - DatabaseAccess.Prosta.getLast >= 600)) and !LastChange.is_reset do
-				wp = DatabaseAccess.lastWpises
-			m = make(wp)
-			end
-		
-			if LastChange.get().status != wpis.status or tmp == true or LastChange.is_reset do
+			tmp == true or LastChange.is_reset ->
+				LastChange.change.wpis
+			wpis.status != LastChange.get.status ->
+				mp = make(wp)
+				DatabaseAccess.Prosta.add(mp)
 				LastChange.change(wpis)
-			end
-                	{:noreply, []}
-		
+			Time.timestamp - DatabaseAccess.Prosta,getLast >= 600 ->
+				mp = make(wp)
+				DatabaseAccess.Prosta.add(mp)
+		end
+                {:noreply, []}	
 	end
 
 	
