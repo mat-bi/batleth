@@ -45,6 +45,7 @@ defdatabase Database do
 			read(tmp)
 		end
 	end
+
         def previous() do
             Amnesia.transaction do
                 Wpis.get(Wpis.prev(Wpis.getLast))
@@ -70,7 +71,7 @@ defdatabase Database do
 
 	"""
 	def lastWpises() do
-		IO.inspect r = get(previous)
+		r = previous
 		
 		Amnesia.transaction do
 			r = where timestamp >= r.timestamp-1800 and timestamp >= LastChange.get.timestamp and status == r.status
@@ -106,12 +107,7 @@ defdatabase Database do
 			_ -> tms = -1
 		end
 
-		#last = Wpis.get(Wpis.getLast)
-		#if percentage == nil and st == nil do
-		#	tms = tms-3
-		#end
-
-            %Wpis{ timestamp: tms, status: st, pr: percentage}
+		%Wpis{timestamp: tms, status: st, pr: percentage}
         end
 
 	def isWpis(zmienna) do
