@@ -38,6 +38,7 @@ defmodule Stat do
 		Returns a and b values from formula of simple linear regression: y = ax + b.	
 	"""
         defp make(a) do
+                
 		[head|_] = a
 		l = length a
 		{:ok, average_timestamp } = GNumber.start_link()
