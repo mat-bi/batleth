@@ -9,14 +9,15 @@ defmodule Stat do
 	end
 
 	def run(wpis, tmp) do		
-		GenServer.call(@supervision_name, {:run, wpis, tmp})
+		GenServer.cast(@supervision_name, {:run, wpis, tmp})
 	end
 
-	def handle_call({:run, wpis, tmp}, _, _) do
+	def handle_cast({:run, wpis, tmp}, _) do
+		if 
 		if LastChange.get().status != wpis.status or tmp == true or LastChange.is_reset() do
 			LastChange.change(wpis)
-		end 
-                {:reply, :ok, []}
+		end
+                {:noreply, []}
 	end
 
 	
@@ -30,7 +31,7 @@ defmodule Stat do
 	"""
         defp make() do
 		a = DatabaseAccess.get(0,0)
-		[head|tail] = a
+		[head|_] = a
 		l = length a
 		{:ok, average_timestamp } = GNumber.start_link()
 		{:ok, average_percentage } = GNumber.start_link()
@@ -88,7 +89,7 @@ defmodule Stat do
 		a = cor*:math.sqrt(var_percentage/var_timestamp)
 		b = average_percentage-a*(average_timestamp+head.timestamp)
 
-		{:reply, {a, b}, []}
+		%{a: a, b: b}
 			
 	end
 	

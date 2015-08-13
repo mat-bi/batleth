@@ -1,10 +1,11 @@
 defmodule Batleth do
 	use Application
+	require Amnesia
+	use Amnesia
+	use Database
 
 	def start(_,_) do
-		require Amnesia
-		use Amnesia
-		use Database
+		
 		Amnesia.start
                 Database.wait
 		import Supervisor.Spec
@@ -30,8 +31,8 @@ defmodule Batleth do
 					case at do
 						:ok ->
 							{:ok, percentage, status} = BatteryReader.read
-							Stat.run(Database.Wpis.parse_wpis(percentage, status), if time_dif > 60 do true else false end)
 							DatabaseAccess.add(%{status: status, pr: percentage})
+							Stat.run(DatabaseAccess.get(DatabaseAccess.getLast()), if time_dif > 60 do true else false end)
 							:timer.sleep(60000)	
 
 						:wait -> 

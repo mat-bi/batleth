@@ -27,6 +27,7 @@ defmodule Time do
 	def time(separator_time \\ ":") do
 		hour<>separator_time<>minute<>separator_time<>second
 	end
+
 	defp parse_zero(l) do
 		if(l >= 0 && l <= 9) do
 			"0" <> Integer.to_string l
