@@ -70,7 +70,7 @@ defdatabase Database do
 
 	"""
 	def lastWpises() do
-		IO.inspect r = previous
+		IO.inspect r = get(previous)
 		
 		Amnesia.transaction do
 			r = where timestamp >= r.timestamp-1800 and timestamp >= LastChange.get.timestamp and status == r.status

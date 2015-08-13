@@ -16,12 +16,12 @@ defmodule Stat do
 		wp = DatabaseAccess.lastWpises
 		cond do
 			tmp == true or LastChange.is_reset ->
-				LastChange.change.wpis
+				LastChange.change(wpis)
 			wpis.status != LastChange.get.status ->
 				mp = make(wp)
 				DatabaseAccess.Prosta.add(mp)
 				LastChange.change(wpis)
-			Time.timestamp - DatabaseAccess.Prosta,getLast >= 600 ->
+			Time.timestamp - DatabaseAccess.Prosta.getLast >= 600 ->
 				mp = make(wp)
 				DatabaseAccess.Prosta.add(mp)
 		end

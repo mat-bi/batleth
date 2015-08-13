@@ -34,7 +34,7 @@ defmodule DatabaseAccess do
 	end
 
 	def handle_call({:lastWpises}, _, _) do
-		{:reply, Wpis.lastWpises(), [])
+		{:reply, Wpis.lastWpises(), []}
 	end
 
 	def handle_call({:getLast, n}, _, _) when is_integer(n) do
