@@ -14,6 +14,7 @@ defmodule Stat do
 
 	def handle_cast({:run, wpis, tmp}, _) do
 		wp = DatabaseAccess.lastWpises
+                
 		cond do
 			tmp == true or LastChange.is_reset ->
 				LastChange.change(wpis)
@@ -24,7 +25,7 @@ defmodule Stat do
 			wpis.pr == LastChange.get.pr and length(wp) >= 5 ->
 				mp = %{a: 0, b: wpis.pr}
 				DatabaseAccess.Prosta.add(mp)
-			Time.timestamp - DatabaseAccess.Prosta.getLast >= 600 and Time.timestamp - LastChange.get.timestamp >= 600 and length(wp) >= 5 ->
+			Time.timestamp - LastChange.get.timestamp >= 600 and length(wp) >= 5 ->
 				mp = make(wp)
 				DatabaseAccess.Prosta.add(mp)
 			true -> 

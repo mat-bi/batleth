@@ -48,7 +48,7 @@ defdatabase Database do
 
         def previous() do
             Amnesia.transaction do
-                Wpis.get(Wpis.prev(Wpis.getLast))
+                getLast |> prev |> get
             end
         end
 	@doc ~S"""
@@ -72,11 +72,14 @@ defdatabase Database do
 	"""
 	def lastWpises() do
 		r = previous
-		
-		Amnesia.transaction do
-			r = where timestamp >= r.timestamp-1800 and timestamp >= LastChange.get.timestamp and status == r.status
-			Amnesia.Selection.values(r)	
-		end
+		if r == nil do
+                    []
+                else
+		        Amnesia.transaction do
+			    r = where timestamp >= r.timestamp-1800 and timestamp >= LastChange.get.timestamp and status == r.status
+			    Amnesia.Selection.values(r)	
+		        end
+                end
 	end
    
         @doc ~S"""
@@ -92,7 +95,7 @@ defdatabase Database do
              """
         def getLast() do
             Amnesia.transaction do
-                Wpis.last(true)
+                last(true)
             end
         end
 
@@ -119,7 +122,7 @@ defdatabase Database do
 	end
 
 	def last(n, []) when is_integer(n) do
-		l = Wpis.get(Wpis.getLast)
+		l = Wpis.getLast |> Wpis.get
 		last(n-1, [l])
 	end
 
