@@ -16,17 +16,18 @@ defmodule Stat do
 		wp = DatabaseAccess.lastWpises
 		cond do
 			tmp == true or LastChange.is_reset ->
-				LastChange.change.wpis
+				LastChange.change(wpis)
 			wpis.status != LastChange.get.status ->
 				mp = make(wp)
 				DatabaseAccess.Prosta.add(mp)
 				LastChange.change(wpis)
-			Time.timestamp - DatabaseAccess.Prosta,getLast >= 600 ->
+			wpis.pr == LastChange.get.pr ->
+				DatabaseAccess.Prosta.add(%{a: 0, b: wpis.pr})
+			Time.timestamp - DatabaseAccess.Prosta.getLast >= 600  and wp.length >= 3 ->
 				mp = make(wp)
 				DatabaseAccess.Prosta.add(mp)
 		end
-                {:noreply, []}
-		
+                {:noreply, []}	
 	end
 
 	
@@ -39,6 +40,7 @@ defmodule Stat do
 		Returns a and b values from formula of simple linear regression: y = ax + b.	
 	"""
         defp make(a) do
+                
 		[head|_] = a
 		l = length a
 		{:ok, average_timestamp } = GNumber.start_link()
