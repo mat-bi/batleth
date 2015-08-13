@@ -24,7 +24,7 @@ defmodule Stat do
 			wpis.pr == LastChange.get.pr and length(wp) >= 5 ->
 				mp = %{a: 0, b: wpis.pr}
 				DatabaseAccess.Prosta.add(mp)
-			Time.timestamp - DatabaseAccess.Prosta.getLast >= 600 ->
+			Time.timestamp - DatabaseAccess.Prosta.getLast >= 600 and length(wp) >= 5 ->
 				mp = make(wp)
 				DatabaseAccess.Prosta.add(mp)
 			true -> 
