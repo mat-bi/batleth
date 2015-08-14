@@ -1,9 +1,13 @@
 defmodule BatteryReader do
-    use GenServer
+    @moduledoc """
+	A module to read and return the current battery status.
+	"""
+ 
 
+    use GenServer
     @supervision_name :battery
     @doc """
-        Starts a battery reader. Takes one argument - pid of the writer.
+        Starts a battery reader - GenServer.
 	If succeeded, returns a tuple {:ok, pid}
 	"""	
 	def start_link(_, _) do    
@@ -31,6 +35,14 @@ defmodule BatteryReader do
 	
 	
 	#Implementation
+	@doc """
+		Handles a call {:read}. Reads the battery status from files and returns {:ok, percentage, status}. 
+		If there was an unknown error, logs it to the log files and returns {:error, :bad_command}.
+
+		Example:
+			iex> BatteryReader.read
+			{:ok, 52, 0}
+	"""
 
 	def handle_call({:read}, _, _) do
 				case File.read("/sys/class/power_supply/BAT1/status") do

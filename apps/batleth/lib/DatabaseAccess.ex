@@ -1,26 +1,22 @@
 defmodule DatabaseAccess do
+	@moduledoc """
+		An access module to the database. All documentation for the functions - see the Database module.
+	"""
 	use GenServer
 	use Database
 
 	@supervision_name :base
 
 	@doc """
-		Starts databaseaccess.
+		Starts DatabaseAccess.
 	"""
 	def start_link(_, _) do
 		Amnesia.start
 		GenServer.start(__MODULE__,  [], [name: @supervision_name])
 	end
-#api
-	@doc """ 
-		Get a record with a parameter at
-		
-		Actually, it is only used for getting the last timestamp, so at = :last_timestamp
-		Possible responses:
-			{:ok, last_timestamp}
-			{:ok, 0} - if there are not records in the Database
-			{:error, :db}
-		"""
+
+	#api
+	
 	def get(at) do
 		GenServer.call(@supervision_name, {:get, at})
 	end
@@ -40,29 +36,18 @@ defmodule DatabaseAccess do
 	def handle_call({:getLast, n}, _, _) when is_integer(n) do
 		{:reply, Wpis.last(n, []), []}
 	end
-	
-	@doc """
-		Get a list of records that meet the conditions: timestamp >= from and timestamp <= to
-		Returns a list of Database.Wpis struct
-				
-		Example return: [%Database.Wpis{pr: 92, status: 1, timestamp: 1438332598},
- 				%Database.Wpis{pr: 92, status: 1, timestamp: 1438332658}]
-	"""
 
 	def get(from, to) do
 		GenServer.call(@supervision_name, {:get, from, to})
 	end
-
-	@doc """
-		Adds record to the database. Requires map %{status, pr}. Returns {:ok} when added, {:error, :db} otherwise
-		"""
 
 	def add(at) do
 		GenServer.call(@supervision_name, {:add, at})
 	end
 
 
-	#Implementation	
+	#Implementation
+	
 	defp no_db do
 		Logging.write(:no_db)
 	end
@@ -80,13 +65,11 @@ defmodule DatabaseAccess do
 		{:reply, Wpis.get(from, to), []}
 	end
 
-
 	def handle_call({:get, :last}, _, _) do
 		tmp = Wpis.getLast()
 		{:reply, Wpis.get(tmp), []}
 	end
 
-	
 	def handle_call({:add, %{status: stat, pr: per}}, _, _) do
 		case Wpis.parse_wpis(per, stat) |> Wpis.add do
 			l when is_map(l) -> {:reply, {:ok}, []}

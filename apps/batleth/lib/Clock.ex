@@ -1,4 +1,8 @@
 defmodule Clock do
+
+    @moduledoc """
+		A clock module to read the current diffeence between timestamp and the last record's timestamp.
+	"""
     use GenServer
     @supervision_name :clock
 
@@ -10,7 +14,7 @@ defmodule Clock do
         	GenServer.start(__MODULE__, [], [name: @supervision_name])
 	end
 
-	@docs """
+	@doc """
 		Gets the current time difference between now and the last record. 
 		Possible responses:
 		{:wait, time_difference} -> tells the app to wait
@@ -21,8 +25,18 @@ defmodule Clock do
 		GenServer.call(@supervision_name, {:read})
 	end
 
+	@doc """
+		Reads the last timestamp from the database and returns a tuple {:wait, time_dif} - 
+		if the time_dif < 60, otherwise {:ok, time_dif}.
+
+		Examples:
+			iex> Clock.read
+			{:ok, 60}
+
+			iex> Clock.read
+			{:wait, 56}
+	"""
 	def handle_call({:read}, _, _) do
-	use Database
 		case DatabaseAccess.get(:last_timestamp) do
 			{:ok, last_timestamp} ->
 				time_dif = Time.timestamp-last_timestamp
