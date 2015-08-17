@@ -41,7 +41,7 @@ defmodule BatteryReader do
 
 		Example:
 			iex> BatteryReader.read
-			{:ok, 52, 0}
+			{:ok, 48, 0}
 	"""
 
 	def handle_call({:read}, _, _) do

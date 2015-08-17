@@ -11,6 +11,35 @@ defmodule Stat do
 	def run(wpis, tmp) do		
 		GenServer.cast(@supervision_name, {:run, wpis, tmp})
 	end
+        
+        def average(from, to) do
+                GenServer.call(@supervision_name, {:average, from, to})
+        end
+
+        def handle_call({:average, from, to}, _, _) do
+                w = DatabaseAccess.Prosta.get(from, to, :less)
+                {:reply, average(w), []}
+        end
+
+        def average([]) do
+                0
+        end
+
+        def average(w) do
+                {:ok, s} = GNumber.start_link
+                Enum.each(w, fn(x) ->
+                    send s, {:add, 100/x.a}
+                end)
+
+                send s, {:get, self()}
+                receive do
+                    av -> av = av
+                end
+
+                send s, {:kill}
+
+                -av/(length w)
+        end
 
 	def handle_cast({:run, wpis, tmp}, _) do
 		wp = DatabaseAccess.lastWpises
@@ -47,7 +76,7 @@ defmodule Stat do
 
 		Returns a and b values from formula of simple linear regression: y = ax + b.	
 	"""
-        defp make(a) do
+        def make(a) do
                 
 		[head|_] = a
 		l = length a

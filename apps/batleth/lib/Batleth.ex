@@ -3,40 +3,20 @@ defmodule Batleth do
 		The main module of batleth backend.
 	"""
 	
-	use Application
 	require Amnesia
 	use Amnesia
 	use Database
-
-	@doc """
+        @doc """
 		Starts the whole application.
 		
 		Example
-			iex> Batleth.start([], [])
-			{:ok, #PID<0.586>}
+			iex> Batleth.start_link([], [])
+			{:ok, #PID<0.586.0>}
 	"""
-	def start(_,_) do
-		
-		Amnesia.start
-                Database.wait
-
-		
-		{:ok, pid} = Task.start_link(fn -> 
-		import Supervisor.Spec
-		children = [
-			worker(Logging, [[], [name: :logger]]),
-			worker(DatabaseAccess, [[], [name: :base]]),
-			worker(BatteryReader, [[], [name: :battery]]),
-			worker(Clock, [[], [name: :clock]]),
-			worker(Stat, [[], []]),
-			worker(LastChange, [[],[]]),
-			worker(DatabaseAccess.Prosta, [[],[]])
-			]
-		Supervisor.start_link(children, strategy: :one_for_all)
-		loop() end)
-
-		{:ok, self()}
+	def start_link(_, _) do
+		Task.start_link(fn -> loop() end)
 	end
+	
 	
 	@doc """
 		A loop function. Firstly, it gets the last timestamp from the database. 

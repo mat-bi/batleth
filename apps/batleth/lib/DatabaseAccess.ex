@@ -29,13 +29,11 @@ defmodule DatabaseAccess do
 		GenServer.call(@supervision_name, {:lastWpises})
 	end
 
-	def handle_call({:lastWpises}, _, _) do
-		{:reply, Wpis.lastWpises(), []}
-	end
+	
+        def get(from, to, status) do
+                GenServer.call(@supervision_name, {:get, from, to, status})
+        end
 
-	def handle_call({:getLast, n}, _, _) when is_integer(n) do
-		{:reply, Wpis.last(n, []), []}
-	end
 
 	def get(from, to) do
 		GenServer.call(@supervision_name, {:get, from, to})
@@ -47,6 +45,14 @@ defmodule DatabaseAccess do
 
 
 	#Implementation
+
+        def handle_call({:lastWpises}, _, _) do
+		{:reply, Wpis.lastWpises(), []}
+	end
+
+	def handle_call({:getLast, n}, _, _) when is_integer(n) do
+		{:reply, Wpis.last(n, []), []}
+	end
 	
 	defp no_db do
 		Logging.write(:no_db)
@@ -78,6 +84,9 @@ defmodule DatabaseAccess do
 				{:reply, {:error, :db}, []}
 		end
 	end
+        def handle_call({:get, from, to, status}, _, _) do
+                {:reply, Wpis.get(from, to, status), []}
+        end
 end
 
 

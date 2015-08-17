@@ -33,6 +33,12 @@ defdatabase Database do
             end
         end
 
+        def get(tmp2,tmp3, stat) do
+             Amnesia.transaction do
+                r = where timestamp >= tmp2 and timestamp <= tmp3 and stat == status
+                Amnesia.Selection.values(r)
+             end
+        end
 	@doc ~S"""
 		Gets and returns the record with timestamp, used as a parameter. Returns a %Database.Wpis struct.
 
@@ -215,6 +221,19 @@ defdatabase Database do
 				read(tmp)
 			end
 		end
+
+                def get(from,to,stat) do
+                        Amnesia.transaction do
+                        case stat do
+                            :equal -> r = where timestamp >= from and timestamp <= to and a == 0.0
+                            :greater -> r = where timestamp >= from and timestamp <= to and a > 0.0
+                            :less -> r = where timestamp >= from and timestamp <= to and a < 0.0
+                            _ -> r =  where timestamp >= from and timestamp <= to
+                        end
+                        r |> Amnesia.Selection.values
+                        end
+                end
+
 
 		@doc """
             		Gets a list of records from timestamp to timestamp. Returns a list of %Database.Prosta struct.
