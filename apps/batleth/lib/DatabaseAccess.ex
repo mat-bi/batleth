@@ -29,6 +29,9 @@ defmodule DatabaseAccess do
 		GenServer.call(@supervision_name, {:lastWpises})
 	end
 
+        def delete(from, to) do
+                GenServer.call(@supervision_name, {:delete, from, to})
+        end
 	
         def get(from, to, status) do
                 GenServer.call(@supervision_name, {:get, from, to, status})
@@ -43,8 +46,16 @@ defmodule DatabaseAccess do
 		GenServer.call(@supervision_name, {:add, at})
 	end
 
+        def del(tmp) do
+                GenServer.call(@supervision_name, {:delete, tmp})
+        end
+
 
 	#Implementation
+
+        def handle_call({:delete, from, to}, _, _) do
+                {:reply, Wpis.del(from, to), []}
+        end
 
         def handle_call({:lastWpises}, _, _) do
 		{:reply, Wpis.lastWpises(), []}
@@ -54,6 +65,10 @@ defmodule DatabaseAccess do
 		{:reply, Wpis.last(n, []), []}
 	end
 	
+        def handle_call({:delete, tmp}, _, _) do
+                {:reply, Wpis.del(tmp), []}
+ 	end
+
 	defp no_db do
 		Logging.write(:no_db)
 	end
@@ -66,15 +81,20 @@ defmodule DatabaseAccess do
 				{:reply, {:error, :db}, []}
 		end
 	end
-	
-	def handle_call({:get, from, to}, _, _) do
-		{:reply, Wpis.get(from, to), []}
-	end
 
 	def handle_call({:get, :last}, _, _) do
 		tmp = Wpis.getLast()
 		{:reply, Wpis.get(tmp), []}
 	end
+
+	def handle_call({:get, tmp}, _, _) do
+		{:reply, Wpis.get(tmp), []}
+	end
+	
+	def handle_call({:get, from, to}, _, _) do
+		{:reply, Wpis.get(from, to), []}
+	end
+
 
 	def handle_call({:add, %{status: stat, pr: per}}, _, _) do
 		case Wpis.parse_wpis(per, stat) |> Wpis.add do

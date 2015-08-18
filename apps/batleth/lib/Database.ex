@@ -98,6 +98,29 @@ defdatabase Database do
 		        end
                 end
 	end
+
+	def del(tmp) do
+		Amnesia.transaction do
+			tmp |> get |> delete
+ 		end
+	end 
+
+        def del_p([]) do
+            true
+        end
+
+        def del_p([h|t]) do
+             Amnesia.transaction do
+                 h |> delete
+             end
+             del_p(t)
+        end
+
+        def del(from, to) do
+             w = get(from, to)
+             del_p(w)
+        end
+             
    
         @doc ~S"""
              Returns the timestamp of the last record from the database.
