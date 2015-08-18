@@ -25,7 +25,7 @@ defmodule DatabaseAccess.Prosta do
                 GenServer.call(@supervision_name, {:delete, from, to})
         end
 
-	def delete(tmp) do
+	def del(tmp) do
                 GenServer.call(@supervision_name, {:delete, tmp})
         end
 
