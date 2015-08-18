@@ -14,7 +14,6 @@ defmodule Batleth.DatabaseAccess.ProstaTest do
 		Database.Prosta.add(%Database.Prosta{a: -2, b: 2, timestamp: -6})
 
 		assert DatabaseAccess.Prosta.get(-42, -22, :less) == [%Database.Prosta{a: -2, b: 2, timestamp: -32}, %Database.Prosta{a: -2, b: 2, timestamp: -22}]
-		assert DatabaseAccess.Prosta.get(-42, -22, :greater) == [%Database.Prosta{a: 2, b: 2, timestamp: -35}]
 
 	end
 		
