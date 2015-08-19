@@ -87,7 +87,7 @@ defmodule DatabaseAccess do
 		{:reply, Wpis.get(tmp), []}
 	end
 
-	def handle_call({:get, tmp}, _, _) when is_integer(tmp) do
+	def handle_call({:get, tmp}, _, _) do
 		{:reply, Wpis.get(tmp), []}
 	end
 	
