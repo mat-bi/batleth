@@ -11,25 +11,46 @@ defmodule LastChange do
 	@supervision_name :lastChange
 	@reset Wpis.parse_wpis(-1,-1, -1)
 
+
+#API
+
+	@doc """
+		Starts LastChange's GenServer.
+	"""
 	def start_link(_, _) do
 		GenServer.start_link(__MODULE__,  @reset , [name: :lastChange])
 	end
 
+	@doc """
+		Resets LastChange - sets value of status, timestamp and pr to -1.
+	"""
 	def reset() do
 		GenServer.cast(:lastChange, {:reset})
 	end
 
+	@doc """
+		Returns 'Wpis' struct that is value of LastChange.
+	"""
 	def get() do
 		GenServer.call(@supervision_name, {:get})
 	end
 
+	@doc """
+		Changes LastChange's value and sets its parameters to parameters of 'zmienna'.
+	"""
 	def change(zmienna) do
 		GenServer.cast(@supervision_name, {:change, zmienna})
 	end
 
+	@doc """
+		A logical function that checks if LastChange is reset: status == -1, pr == -1 and timestamp == -1.
+	"""
 	def is_reset() do
 		GenServer.call(@supervision_name, {:is_reset})
 	end
+
+
+#Implementation
 
 	def handle_call({:is_reset}, _, last_ch) do
 		if last_ch == @reset do

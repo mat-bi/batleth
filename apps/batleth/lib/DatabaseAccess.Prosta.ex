@@ -1,9 +1,18 @@
 defmodule DatabaseAccess.Prosta do
+	@moduledoc """
+		An access module to the table 'Prosta' from the database. For the documentation of functions -
+		see the table 'Prosta' in the Database module.
+	"""
+	
 	use GenServer
 	use Database
 	
 	@supervision_name :db_prosta
 
+
+	@doc """
+		Starts DatabaseAccess.Prosta.
+	"""
 	def start_link(_, _) do
 		#Amnesia.start
 		GenServer.start_link(__MODULE__,  [], [name: @supervision_name])

@@ -6,10 +6,10 @@ defdatabase Database do
 	@moduledoc """
 		Represents the database of the app.
 	"""
-    deftable Wpis, [ :timestamp, :status, :pr ], type: :ordered_set do
+	deftable Wpis, [ :timestamp, :status, :pr ], type: :ordered_set do
         @type t :: %Wpis{timestamp: non_neg_integer, status: non_neg_integer, pr: non_neg_integer}
         
-        @doc ~S"""
+        @doc """
             Gets a list of records from timestamp to timestamp. Returns a list of %Database.Wpis struct.
 
 		## Examples
@@ -39,7 +39,8 @@ defdatabase Database do
                 Amnesia.Selection.values(r)
              end
         end
-	@doc ~S"""
+        
+	@doc """
 		Gets and returns the record with timestamp, used as a parameter. Returns a %Database.Wpis struct.
 
 		## Examples
@@ -68,8 +69,10 @@ defdatabase Database do
                 getLast |> prev |> get
             end
         end
-	@doc ~S"""
-		Gets and returns a list of records [Wpis] with the same status as the previous record's status, that have been saved in the last (at most) 30 minutes, but newer than last change 			of the battery status.
+	@doc """
+		Gets and returns a list of records [Wpis] with the same status as the previous record's status,
+		that have been saved in the last (at most) 30 minutes, but newer than last change
+		of the battery status.
 		
 		## Examples
 		
@@ -122,7 +125,7 @@ defdatabase Database do
         end
              
    
-        @doc ~S"""
+        @doc """
              Returns the timestamp of the last record from the database.
 
 	     	## Examples
@@ -141,16 +144,15 @@ defdatabase Database do
 
 
         @doc """
-             Parses percentage and status to a struct Wpis, adding the current timestamp (in sec) or -1, when the third parameter is not equal to :timestamp (default).
+             Parses percentage and status to a struct Wpis, adding the current timestamp (in sec) or -1,
+             when the third parameter is not equal to :timestamp (default).
 	     
-		Example:
+		Examples:
 			iex> Database.Wpis.parse_wpis(-1,-1,-1)
 			%Database.Wpis{pr: -1, status: -1, timestamp: -1}
 
 			iex> iex(6)> Database.Wpis.parse_wpis(-1,-1)   
 			%Database.Wpis{pr: -1, status: -1, timestamp: 1439554494}
-
-
              """
 
         def parse_wpis(percentage, st, tmp \\ :timestamp) do
@@ -229,7 +231,8 @@ defdatabase Database do
 	
 
 		@doc """
-			Gets and returns the record with timestamp, used as a parameter. Returns a %Database.Prosta struct or nil, when there is no such a record.
+			Gets and returns the record with timestamp, used as a parameter.
+			Returns a %Database.Prosta struct or nil, when there is no such a record.
 
 			Examples:
 				iex> Database.Prosta.get(0)
@@ -344,6 +347,10 @@ defdatabase Database do
 	             del_p(t)
 	        end
 	
+		@doc """
+			Deletes records 'Prosta' which have timestamp greater than given 'from'
+			and less than given 'to'.
+		"""
 	        def del(from, to) do
 	             w = get(from, to)
 	             del_p(w)

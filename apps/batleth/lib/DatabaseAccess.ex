@@ -104,6 +104,7 @@ defmodule DatabaseAccess do
 				{:reply, {:error, :db}, []}
 		end
 	end
+	
         def handle_call({:get, from, to, status}, _, _) do
                 {:reply, Wpis.get(from, to, status), []}
         end
