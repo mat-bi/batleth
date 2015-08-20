@@ -5,7 +5,7 @@ defmodule Stat do
 	@supervision_name :stat
 
 	def start_link(_, _) do
-		GenServer.start(__MODULE__,  [] , [name: :stat])
+		GenServer.start_link(__MODULE__,  [] , [name: :stat])
 	end
 
 	def run(wpis, tmp) do		
@@ -28,15 +28,11 @@ defmodule Stat do
         def average(w) do
                 {:ok, s} = GNumber.start_link
                 Enum.each(w, fn(x) ->
-                    send s, {:add, 100/x.a}
+                    GNumber.add(s, 100/x.a)
                 end)
 
-                send s, {:get, self()}
-                receive do
-                    av -> av = av
-                end
-
-                send s, {:kill}
+                av = GNumber.get(s)
+                GNumber.kill(s)
 
                 -av/(length w)
         end
@@ -83,27 +79,16 @@ defmodule Stat do
 		{:ok, average_timestamp } = GNumber.start_link()
 		{:ok, average_percentage } = GNumber.start_link()
 		{:ok, average} = GNumber.start_link
-		Enum.each(a, fn(x) -> send average_timestamp, {:add, x.timestamp-head.timestamp}
-				      send average_percentage, {:add, x.pr}
-				      send average, {:add, (x.timestamp-head.timestamp)*x.pr} end)
-		send average_timestamp, {:get, self()}
-		receive do
-			tmp -> tmp=tmp
-		end
+		Enum.each(a, fn(x) -> GNumber.add(average_timestamp, x.timestamp-head.timestamp)
+				      GNumber.add(average_percentage, x.pr)
+				      GNumber.add(average, (x.timestamp-head.timestamp)*x.pr) end)
+		tmp = GNumber.get(average_timestamp)
+		pr = GNumber.get(average_percentage)
+                av = GNumber.get(average)
 
-		send average_percentage, {:get, self()}
-		receive do
-			pr -> pr = pr
-		end
-
-		send average, {:get, self()}
-		receive do
-			av -> av = av
-		end
-
-		send average_timestamp, {:kill}
-		send average_percentage, {:kill}
-		send average_percentage, {:kill}
+		GNumber.kill(average_timestamp)
+		GNumber.kill(average_percentage)
+		GNumber.kill(average_percentage)
 
 		average_timestamp = tmp/l
 		average_percentage = pr/l
@@ -112,21 +97,14 @@ defmodule Stat do
 		{:ok, var_timestamp} = GNumber.start_link()
 		{:ok, var_percentage} = GNumber.start_link()
 
-		Enum.each(a, fn(x) -> send var_timestamp, {:add, (x.timestamp-head.timestamp-average_timestamp)*(x.timestamp-head.timestamp-average_timestamp)/l}
-				      send var_percentage, {:add, (x.pr-average_percentage)*(x.pr-average_percentage)} end)
+		Enum.each(a, fn(x) -> GNumber.add(var_timestamp, (x.timestamp-head.timestamp-average_timestamp)*(x.timestamp-head.timestamp-average_timestamp)/l)
+				      GNumber.add(var_percentage,(x.pr-average_percentage)*(x.pr-average_percentage)) end)
 
-		send var_timestamp, {:get, self()}
-		receive do
-			tmp -> tmp = tmp
-		end
+		tmp = GNumber.get(var_timestamp)
+		pr = GNumber.get(var_percentage)
 
-		send var_percentage, {:get, self()}
-		receive do
-			pr -> pr = pr
-		end
-
-		send var_timestamp, {:kill}
-		send var_percentage, {:kill}
+                GNumber.kill(var_timestamp)
+		GNumber.kill(var_percentage)
 
 		var_timestamp = tmp
 		var_percentage = pr/l

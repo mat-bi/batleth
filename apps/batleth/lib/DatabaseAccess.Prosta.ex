@@ -6,7 +6,7 @@ defmodule DatabaseAccess.Prosta do
 
 	def start_link(_, _) do
 		Amnesia.start
-		GenServer.start(__MODULE__,  [], [name: @supervision_name])
+		GenServer.start_link(__MODULE__,  [], [name: @supervision_name])
 	end
 
 	def getLast() do

@@ -11,7 +11,7 @@ defmodule BatteryReader do
 	If succeeded, returns a tuple {:ok, pid}
 	"""	
 	def start_link(_, _) do    
-		GenServer.start(__MODULE__,  [] , [name: :battery])
+		GenServer.start_link(__MODULE__,  [] , [name: :battery])
 	end
 
 	#api

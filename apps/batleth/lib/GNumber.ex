@@ -1,18 +1,35 @@
 defmodule GNumber do
+
+        use GenServer
 	@doc """
 		Allows using 'global variables' - floats or integers.
 	"""
 
 	def start_link() do
-		Task.start_link(fn() -> loop(0) end)
+		GenServer.start_link(__MODULE__, 0)
 	end
 
-	defp loop(i) do
-		receive do
-			{:add, l} -> loop(i+l)
-			{:get, caller} -> send caller, i
-					loop(i)
-			{:kill} -> 0
-		end
-	end
+        def add(pid, l) do
+                GenServer.cast(pid, {:add, l})
+        end
+
+        def get(pid) do
+                GenServer.call(pid, :get)
+        end
+
+        def kill(pid) do
+                GenServer.cast(pid, :kill)
+        end
+
+        def handle_cast({:add, l}, st) do
+                {:noreply, st+l}
+        end
+
+        def handle_cast(:kill, st) do
+                {:stop, :normal, st}
+        end
+
+        def handle_call(:get, _, st) do
+                {:reply, st, st}
+        end
 end

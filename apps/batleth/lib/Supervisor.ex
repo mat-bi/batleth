@@ -3,7 +3,7 @@ defmodule Batleth.Supervisor do
         def start(_,_) do
                 Amnesia.start
                 Database.wait
-                Supervisor.start_link(__MODULE__, [])
+                Supervisor.start_link(__MODULE__, [], [name: :sup])
         end
 
         def init([]) do
@@ -17,6 +17,6 @@ defmodule Batleth.Supervisor do
 			(worker(DatabaseAccess.Prosta, [[],[]])),
 			(worker(Batleth, [[],[]]))
 			]
-        supervise(children, strategy: :one_for_all)
+        supervise(children, strategy: :one_for_one)
         end
 end

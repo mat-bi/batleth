@@ -6,7 +6,7 @@ defmodule Logging do
 	end
 
 	def start_link(_, _) do
-		GenServer.start(__MODULE__, [], opts)
+		GenServer.start_link(__MODULE__, [], opts)
 	end
 	#api
 	@doc ~S"""
@@ -36,7 +36,14 @@ defmodule Logging do
 	end
 
 	defp fwrite(error) do
-		File.write!("/var/log/batleth/#{Time.year}/#{Time.month}.log", Time.date_and_time <> " " <> error<>"\n", [:append])
+                unless File.exists?("/var/log/batleth/#{Time.year}") do
+                        File.mkdir("/var/log/batleth/#{Time.year}")
+                end
+                {:ok, pid} = File.open("/var/log/batleth/#{Time.year}/#{Time.month}.log", [:append])
+                unless IO.write(pid,Time.date_and_time <> " " <> error<>"\n") == :ok do
+                        raise "Logger can't write to the file"
+                end
+                File.close(pid) 
 	end
 				
 	def handle_call({:write, :no_db}, _, _) do

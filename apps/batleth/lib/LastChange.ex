@@ -6,7 +6,7 @@ defmodule LastChange do
 	@reset Wpis.parse_wpis(-1,-1, -1)
 
 	def start_link(_, _) do
-		GenServer.start(__MODULE__,  @reset , [name: :lastChange])
+		GenServer.start_link(__MODULE__,  @reset , [name: :lastChange])
 	end
 
 	def reset() do
