@@ -1,7 +1,18 @@
 defmodule Batleth.Supervisor do
         use Supervisor
+        require Amnesia
+
+        def main(_) do
+            start([],[])
+        end
+
         def start(_,_) do
-                Amnesia.start
+                Amnesia.stop
+                Amnesia.Schema.create
+                Amnesia.start    
+    
+                Database.create(disk: [node])
+
                 Database.wait
                 Supervisor.start_link(__MODULE__, [], [name: :sup])
         end

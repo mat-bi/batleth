@@ -11,7 +11,7 @@ defmodule DatabaseAccess do
 		Starts DatabaseAccess.
 	"""
 	def start_link(_, _) do
-		Amnesia.start
+		#Amnesia.start
 		GenServer.start_link(__MODULE__,  [], [name: @supervision_name])
 	end
 

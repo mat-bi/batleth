@@ -9,6 +9,7 @@ defmodule Batleth.Mixfile do
      lockfile: "../../mix.lock",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     escript: [main_module: Batleth.Supervisor],
      deps: deps]
   end
 
@@ -16,7 +17,7 @@ defmodule Batleth.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger],
+    [applications: [:logger, :amnesia],
     mod: { Batleth.Supervisor, []}]
 	
  end
@@ -34,6 +35,8 @@ def escript do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:amnesia, github: "meh/amnesia", tag: :master}]
+    [{:amnesia, github: "meh/amnesia", tag: :master},
+     {:exrm, "~> 0.19.2"}]
+     #{:relx, github: "erlware/relx", tag: :master}]
   end
 end

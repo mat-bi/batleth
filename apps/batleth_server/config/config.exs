@@ -12,7 +12,8 @@ config :batleth_server, BatlethServer.Endpoint,
   secret_key_base: "/gVBlVAHWqAChrWvzBW8XucftMAU5TUob18PhIH66ijtIsCE/PwPBME0Bp7DgMSB",
   render_errors: [default_format: "html"],
   pubsub: [name: BatlethServer.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+           adapter: Phoenix.PubSub.PG2],
+  server: true
 
 # Configures Elixir's Logger
 config :logger, :console,

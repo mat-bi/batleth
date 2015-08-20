@@ -5,7 +5,7 @@ defmodule DatabaseAccess.Prosta do
 	@supervision_name :db_prosta
 
 	def start_link(_, _) do
-		Amnesia.start
+		#Amnesia.start
 		GenServer.start_link(__MODULE__,  [], [name: @supervision_name])
 	end
 
