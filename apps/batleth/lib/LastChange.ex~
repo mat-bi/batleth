@@ -1,7 +1,6 @@
 defmodule LastChange do
 	@moduledoc """
-		A module that saves first record 'Wpis' of last status after status change 
-		or after break of the application working.
+		A module that saves last change of status or f
 	"""
 
 

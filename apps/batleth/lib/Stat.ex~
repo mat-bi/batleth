@@ -1,5 +1,5 @@
 defmodule Stat do
-	@moduledoc """
+	@doc """
 		The statistical module.
 	"""
 	use GenServer

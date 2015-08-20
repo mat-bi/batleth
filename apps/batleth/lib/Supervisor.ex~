@@ -1,9 +1,13 @@
 defmodule Batleth.Supervisor do
+	@doc """
+		The supervisor's module.
+	"""
+
         use Supervisor
         def start(_,_) do
                 Amnesia.start
                 Database.wait
-                Supervisor.start_link(__MODULE__, [])
+                Supervisor.start_link(__MODULE__, [], [name: :sup])
         end
 
         def init([]) do
