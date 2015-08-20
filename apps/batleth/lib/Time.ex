@@ -1,5 +1,7 @@
 defmodule Time do
-
+	@moduledoc """
+		A module with very useful time functions.
+	"""
 	def timestamp(format \\ :sec) do
 		{ms, s, mss} = :os.timestamp
 		case format do
@@ -15,19 +17,31 @@ defmodule Time do
 		:calendar.local_time()
 	end
 
+	@doc """
+		Returns current date and time with a given or default separator.
+	"""
 	def date_and_time(separator_date \\ "/", separator_time \\ ":") do
 		date(separator_date) <> " " <> time(separator_time)
 	end
 		
-
+	@doc """
+		Returns current date with a given or default separator.
+	"""
 	def date(separator_date \\ "/") do
 		day<>separator_date<>month<>separator_date<>year
 	end
 
+	@doc """
+		Returns current time with a given or default separator.
+	"""
 	def time(separator_time \\ ":") do
 		hour<>separator_time<>minute<>separator_time<>second
 	end
 
+
+	@doc """
+		Auxiliary functions.
+	"""
 	defp parse_zero(l) do
 		if(l >= 0 && l <= 9) do
 			"0" <> Integer.to_string l
@@ -67,6 +81,10 @@ defmodule Time do
 		parse_zero(s)
 	end
 
+
+	@doc """
+		Converts a timestamp to human format of date and time.
+	"""
 	p = {{1970, 1, 1}, {0, 0, 0}}
   	@p :calendar.datetime_to_gregorian_seconds(p)
   	def from_timestamp(timestamp) do

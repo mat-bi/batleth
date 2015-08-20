@@ -1,4 +1,8 @@
 defmodule Batleth.Supervisor do
+	@moduledoc """
+		The supervisor's module.
+	"""
+
         use Supervisor
         require Amnesia
 

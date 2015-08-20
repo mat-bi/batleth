@@ -1,4 +1,8 @@
 defmodule Logging do
+	@moduledoc """
+		The module of the logger.
+	"""	
+	
 	use GenServer
 
 	defp opts() do

@@ -1,4 +1,10 @@
 defmodule LastChange do
+	@moduledoc """
+		A module that saves first record 'Wpis' of last status after status change 
+		or after break of the application working.
+	"""
+
+
 	use GenServer
 	use Database
 	

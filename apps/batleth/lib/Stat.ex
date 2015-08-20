@@ -1,4 +1,7 @@
 defmodule Stat do
+	@moduledoc """
+		The statistical module.
+	"""
 	use GenServer
 	use Database
 
