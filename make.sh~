@@ -24,7 +24,6 @@ case "$#" in
 		case "$1" in
 			"install") 
 				sudo apt-get install curl
-				sudo apt-get install rebar
 				wget -qO- https://raw.githubusercontent.com/xtuple/nvm/master/install.sh | sudo bash
 				nvm install v0.10.40
 				nvm alias default 0.10
