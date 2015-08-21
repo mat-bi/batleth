@@ -1,0 +1,25 @@
+<div class="table-container hoverable light-blue darken-2 z-depth-1 yellow-text text-lighten-4">
+  <div class="icon-block">
+    <h4 class="center yellow-text text-lighten-4">
+      <span><i class="material-icons">flash_on</i></span>
+      <span>History</span>
+    </h4>
+  </div>
+  <table class="centered">
+    <thead>
+      <tr>
+        <th data-field="date">Date</th>
+        <th data-field="time">Time</th>
+        <th data-field="status">Status</th>
+        <th data-field="charge">Charge %</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    <%= for record <- @records do %>
+      <%= render "record.html", record: record %>
+  <% end %>
+    </tbody>
+  </table>
+</div>
+

@@ -1,5 +1,5 @@
 defmodule BatlethServer.PageViewTest do
-  use BatlethServer.ConnCase
+  use BatlethServer.ConnCase, async: true
   alias BatlethServer.PageView
 
   test "status is properly parsed" do
@@ -15,7 +15,7 @@ defmodule BatlethServer.PageViewTest do
 
   test "time and date are parsed" do
     timestamp = 1438332598
-    assert(PageView.parse_time(timestamp)) == "08:49"
-    assert(PageView.parse_date(timestamp)) == "2015/07/31"
+    assert PageView.parse_time(timestamp) == "08:49"
+    assert PageView.parse_date(timestamp) == "2015/07/31"
   end
 end

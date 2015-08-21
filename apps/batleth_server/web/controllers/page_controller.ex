@@ -1,15 +1,39 @@
 defmodule BatlethServer.PageController do
   use BatlethServer.Web, :controller
+  use Timex
 
   @per_page 10
 
   def index(conn, params) do
+    IO.inspect(params)
+    filter_to = get_date(params["filter_to"])
+    filter_from = get_date(params["filter_from"])
+    date_end = filter_to || BatlethServer.Time.week_ago
+    date_start = filter_to || BatlethServer.Time.(Date.subtract(Time.to_timestamp(Date.now, 7, :days)))
     last = get_last_record
-    date_end = BatlethServer.Time.today
-    date_start = BatlethServer.Time.week_ago
     records_list = GenServer.call(:base, {:get, date_start, date_end})
-    {pages_num, current_page, paged} = prepare_pagination(records_list, params)
+    IO.inspect(records_list)
+    {pages_num, current_page, paged} = case records_list do
+    [list] ->prepare_pagination(records_list, params)
+    _ -> {1,1,[]}
+    end
     render conn, "index.html", records: paged, last: last, pages_num: pages_num, current_page: current_page
+  end
+
+  def filter(conn, %{"filter" => filter}) do
+    filter_from = DateFormat.parse(filter["from"], "%d %B, %Y", :strftime)
+
+    IO.inspect(filter_from)
+    redirect conn, to: "/"#, filter_from: from, filter_to: to
+  end
+
+
+
+  defp get_date(param) do
+    #case param do
+
+      #end
+      nil
   end
 
   #Returns last record from database.
