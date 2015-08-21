@@ -1,0 +1,17 @@
+<ul class = "pagination">
+  <%= if (@current_page == 1) do %>
+    <li class="disabled"><a href="#!">
+  <% else %>
+    <li class="waves-effect"><a href=<%= page_path(@conn, :index, current_page: (@current_page - 1))%>>
+  <% end %>
+  <i class="material-icons">chevron_left</i></a></li>
+  <%= for p <- pages(@pages_num) do %>
+    <%= render "page_link.html", p: p, current_page: @current_page, conn: @conn %>
+  <% end %>
+  <%= if (@current_page == @pages_num) do %>
+    <li class="disabled"><a href="#!">
+  <% else %>
+    <li class="waves-effect"><a href=<%= page_path(@conn, :index, current_page: (@current_page + 1))%>>
+  <% end %>
+  <i class="material-icons">chevron_right</i></a></li>
+</ul>

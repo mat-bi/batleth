@@ -1,39 +1,77 @@
-<div class="jumbotron">
-  <h2>Welcome to Phoenix!</h2>
-  <p class="lead">Most web frameworks make you choose between speed and a productive environment. <a href="http://phoenixframework.org">Phoenix</a> and <a href="http://elixir-lang.org">Elixir</a> give you both.</p>
-</div>
-
-<div class="row marketing">
-  <div class="col-lg-6">
-    <h4>Resources</h4>
-    <ul>
-      <li>
-        <a href="http://phoenixframework.org/docs/overview">Guides</a>
-      </li>
-      <li>
-        <a href="http://hexdocs.pm/phoenix">Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-    </ul>
+  <div class = "section">
+    <div class="row">
+      <div id="chart_div"> </div>
+    </div>
+    <div class = "row">
+      <div class="col s3 offset-s3">
+        <a id="btn-back" class="btn waves-effect waves-light light-blue darken-2"><i class="material-icons left">fast_rewind</i>Show older</a>
+      </div>
+      <div class = "col s3 right-align">
+        <a id="btn-forward" class="btn waves-effect waves-light light-blue darken-2"><i class="material-icons right">fast_forward</i>Show newer</a>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="row">
+      <div class="col s12 l6">
+        <div class="row">
+          <%= render "form.html", conn: @conn %>
+        </div>
+        <div class="row">
+          <%= render "table.html", records: @records%>
+        </div>
+        <div class="row">
+          <%= if @records != [] do %>
+          <%= render "pagination.html", pages_num: @pages_num, current_page: @current_page, conn: @conn %>
+          <% end %>
+                  </div>
+      </div>
+      <div class="col s12 l6">
+        <div class ="row">
+          <div class= "col s12 m6">
+            <div class="center card-panel hoverable valign-wrapper light-blue darken-2">
+              <div class= "valign">
+                <h4 class="regular yellow-text text-lighten-4">
+                  Current battery level
+                </h4>
+                <h3 id="battery-level" class="bold yellow-text text-accent-3"><%= @last.pr%> %</h3>
+              </div>
+            </div>
+          </div>
+          <div class= "col s12 m6">
+            <div class="center card-panel hoverable valign-wrapper deep-orange darken-2 accent-4">
+              <div class= "valign">
+                <h4 class="regular yellow-text text-lighten-4">
+                  Full discharge in
+                </h4>
+                <h3 class="bold yellow-text text-accent-3">11m</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class ="row">
+          <div class= "col s12 m6 ">
+            <div class="center card-panel hoverable valign-wrapper light-blue darken-2">
+              <div class= "valign">
+                <h4 class="regular yellow-text text-lighten-4">
+                  Battery charges on average in
+                </h4>
+                <h3 class="bold yellow-text text-accent-3">2h 20m</h3>
+              </div>
+            </div>
+          </div>
+          <div class= "col s12 m6">
+            <div class="center card-panel hoverable valign-wrapper light-blue darken-2">
+              <div class= "valign">
+                <h4 class="regular yellow-text text-lighten-4">
+                  Battery discharges on average in
+                </h4>
+                <h3 class="bold yellow-text text-accent-3">2h 40m</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="col-lg-6">
-    <h4>Help</h4>
-    <ul>
-      <li>
-        <a href="http://groups.google.com/group/phoenix-talk">Mailing list</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix/issues?state=open">Issues</a>
-      </li>
-      <li>
-        <a href="http://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">@elixirphoenix</a>
-      </li>
-    </ul>
-  </div>
-</div>

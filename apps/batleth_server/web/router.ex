@@ -16,6 +16,7 @@ defmodule BatlethServer.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    post "/", PageController, :filter
     get "/last", RecordsController, :last
   end
 

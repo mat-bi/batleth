@@ -1,0 +1,16 @@
+<div class="col s12" >
+  <h5>Filter history by dates</h5>
+</div>
+<%= form_for @conn, page_path(@conn, :filter), [name: :filter], fn f ->%>
+<div class="col s5">
+  <h6>From: </h6>
+<%= text_input f, :from, class: "datepicker"%>
+</div>
+<div class="col s5">
+  <h6>To: </h6>
+<%= text_input f, :to, class: "datepicker" %>
+</div>
+<div class="col s2">
+  <button type="submit" class="btn-floating btn-large waves-effect waves-light light-blue darken-2"> <i class="material-icons">done</i> </button>
+</div>
+<% end %>
