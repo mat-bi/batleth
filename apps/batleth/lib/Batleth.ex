@@ -41,7 +41,8 @@ defmodule Batleth do
 							
 					end
 				_ -> Logging.write(:bad_cmd)
-					:timer.sleep(2000)
+				     raise "Bad command"
+					:timer.sleep(20)
 			end
 			loop()
 

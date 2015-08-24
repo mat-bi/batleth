@@ -55,13 +55,17 @@ defmodule Stat do
 				mp = make(wp)
 				DatabaseAccess.Prosta.add(mp)
 				LastChange.change(wpis)
-			wpis.pr == LastChange.get.pr and length(wp) >= 10 ->
-				mp = %{a: 0, b: wpis.pr}
-				DatabaseAccess.Prosta.add(mp)
-			length(wp) >= 5 and Time.timestamp-LastChange.get.timestamp >= 600 and (r == false or Time.timestamp - DatabaseAccess.Prosta.getLast >= 600) ->
-				mp = make(wp)
-				DatabaseAccess.Prosta.add(mp)
-			true -> 
+			Time.timestamp-LastChange.get.timestamp >= 600 and (r == false or Time.timestamp - DatabaseAccess.Prosta.getLast >= 600) ->
+
+                        cond do 
+			        wpis.pr == LastChange.get.pr and length(wp) >= 10 ->
+				        mp = %{a: 0, b: wpis.pr}
+				        DatabaseAccess.Prosta.add(mp)
+			        length(wp) >= 5  ->
+				        mp = make(wp)
+				        DatabaseAccess.Prosta.add(mp)
+			        true ->
+			end 
 		end
                 {:noreply, []}	
 	end

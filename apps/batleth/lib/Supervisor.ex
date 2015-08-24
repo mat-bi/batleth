@@ -11,13 +11,13 @@ defmodule Batleth.Supervisor do
         end
 
         def start(_,_) do
-                Amnesia.stop
-                Amnesia.Schema.create
-                Amnesia.start    
+                #Amnesia.stop
+                #Amnesia.Schema.create
+                #Amnesia.start    
     
-                Database.create(disk: [node])
+                #Database.create(disk: [node])
 
-                Database.wait
+                #Database.wait
                 Supervisor.start_link(__MODULE__, [], [name: :sup])
         end
 
