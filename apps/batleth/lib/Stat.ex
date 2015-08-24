@@ -66,6 +66,7 @@ defmodule Stat do
 				        DatabaseAccess.Prosta.add(mp)
 			        true ->
 			end 
+			true ->
 		end
                 {:noreply, []}	
 	end
