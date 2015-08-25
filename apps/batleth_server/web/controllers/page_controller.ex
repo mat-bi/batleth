@@ -8,11 +8,12 @@ defmodule BatlethServer.PageController do
     IO.inspect(params)
     filter_to = get_date(params["filter_to"])
     filter_from = get_date(params["filter_from"])
-    date_end = filter_to || BatlethServer.Time.week_ago
+    date_start = filter_to || BatlethServer.Time.week_ago
     #date_start = filter_to || BatlethServer.Time.Date.subtract(Time.to_timestamp(Date.now, 7, :days))
-    date_start = filter_to || Date.now
+    date_end = filter_to || Date.now
     last = get_last_record
     records_list = GenServer.call(:base, {:get, date_start, date_end})
+    IO.puts "Oto lista:"
     IO.inspect(records_list)
     {pages_num, current_page, paged} = case records_list do
     [list] ->prepare_pagination(records_list, params)
@@ -37,7 +38,7 @@ defmodule BatlethServer.PageController do
       nil
   end
 
-  #Returns last record from database.
+  #Returns last record from the database.
   #If database empty, returns %{pr: "Unknown"} map
   defp get_last_record do
     case GenServer.call(:base, {:get, :last}) do
