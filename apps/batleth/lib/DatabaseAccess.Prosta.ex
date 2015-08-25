@@ -25,6 +25,10 @@ defmodule DatabaseAccess.Prosta do
         def get(from, to, status \\ nil) do
                 GenServer.call(@supervision_name, {:get, from, to, status})
         end
+        
+        def get(tmp) do
+                GenServer.call(@supervision_name, {:get, tmp})
+        end
 
 	def add(prosta) do
 		GenServer.call(@supervision_name, {:add, prosta})
@@ -38,8 +42,14 @@ defmodule DatabaseAccess.Prosta do
                 GenServer.call(@supervision_name, {:delete, tmp})
         end
 
+
+
         def handle_call({:get, from, to, status}, _, _) do
                 {:reply, Prosta.get(from, to, status), []}
+        end
+        
+        def handle_call({:get, tmp}, _, _) do
+                {:reply, Prosta.get(tmp), []}
         end
 
 	def handle_call({:getLast}, _, _) do

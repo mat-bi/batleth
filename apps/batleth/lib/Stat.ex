@@ -15,12 +15,12 @@ defmodule Stat do
 		GenServer.cast(@supervision_name, {:run, wpis, tmp})
 	end
         
-        def average(from, to) do
-                GenServer.call(@supervision_name, {:average, from, to})
+        def average(from, to, status \\:less) do
+                GenServer.call(@supervision_name, {:average, from, to, status})
         end
 
-        def handle_call({:average, from, to}, _, _) do
-                w = DatabaseAccess.Prosta.get(from, to, :less)
+        def handle_call({:average, from, to, status}, _, _) do
+                w = DatabaseAccess.Prosta.get(from, to, status)
                 {:reply, average(w), []}
         end
 

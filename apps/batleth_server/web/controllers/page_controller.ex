@@ -1,6 +1,6 @@
 defmodule BatlethServer.PageController do
   use BatlethServer.Web, :controller
-  use Timex
+  #use Timex
 
   @per_page 10
 
@@ -10,16 +10,38 @@ defmodule BatlethServer.PageController do
     filter_from = get_date(params["filter_from"])
     date_start = filter_to || BatlethServer.Time.week_ago
     #date_start = filter_to || BatlethServer.Time.Date.subtract(Time.to_timestamp(Date.now, 7, :days))
-    date_end = filter_to || Date.now
+    date_end = filter_to || Timex.Date.now
     last = get_last_record
-    records_list = GenServer.call(:base, {:get, date_start, date_end})
+    records_list = DatabaseAccess.get(date_start, date_end)
+    if Time.timestamp - DatabaseAccess.Prosta.getLast < 600 and LastChange.get.timestamp < DatabaseAccess.Prosta.getLast and LastChange.get.status == 1 do
+           w = (DatabaseAccess.Prosta.getLast |> DatabaseAccess.Prosta.get)
+           discharge = -w.b/w.a
+           h = round(Float.floor((discharge - Time.timestamp)/3600))
+           m = round(Float.floor(((discharge - Time.timestamp)-h*3600)/60))
+           discharge = Integer.to_string(h)<>"h "<>Integer.to_string(m)<>"m" 
+    else
+           discharge = "Unknown"
+    end
+    
+    dbattery = Stat.average(Time.timestamp()-2_592_000, Time.timestamp())  
+    h = if dbattery > 3600 do
+            Float.floor(dbattery/3600) |> round
+        else 0 end
+            
+    m = Float.floor((dbattery-h*3600)/60) |> round
+    
+    if dbattery == 0 do
+          dbattery = "Unknown"
+    else
+          dbattery = Integer.to_string(h)<>"h "<>Integer.to_string(m)<>"m"
+    end
     IO.puts "Oto lista:"
     IO.inspect(records_list)
     {pages_num, current_page, paged} = case records_list do
     [list] ->prepare_pagination(records_list, params)
     _ -> {1,1,[]}
     end
-    render conn, "index.html", records: paged, last: last, pages_num: pages_num, current_page: current_page
+    render conn, "index.html", discharge: discharge, battery: Stat.average(Time.timestamp()-2_592_000, Time.timestamp, :greater), dbattery: dbattery, records: paged, last: last, pages_num: pages_num, current_page: current_page
   end
 
   def filter(conn, %{"filter" => filter}) do
