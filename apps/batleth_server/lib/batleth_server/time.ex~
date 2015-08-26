@@ -37,7 +37,7 @@ defmodule BatlethServer.Time do
   end
 
   @doc """
-  Parses batleth timestamp.
+  Parses batleth timestamp
   """
   def parse_timestamp(tms, string) do
     tms = timestamp_to_time(tms)

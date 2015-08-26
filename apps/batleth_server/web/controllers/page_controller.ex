@@ -26,8 +26,6 @@ defmodule BatlethServer.PageController do
     dbattery = Stat.average(Time.timestamp()-2_592_000, Time.timestamp())  
     dbattery = bat(dbattery)
     battery = -Stat.average(Time.timestamp()-2_592_000, Time.timestamp(), :greater) |> bat
-    IO.puts "Oto lista:"
-    IO.inspect(records_list)
     {pages_num, current_page, paged} = case records_list do
     [list] ->prepare_pagination(records_list, params)
     _ -> {1,1,[]}
@@ -64,8 +62,10 @@ defmodule BatlethServer.PageController do
       nil
   end
 
-  #Returns last record from the database.
-  #If database empty, returns %{pr: "Unknown"} map
+  @doc """
+  	Returns last record from the database.
+  	If database empty, returns %{pr: "Unknown"} map.
+  """
   defp get_last_record do
     case GenServer.call(:base, {:get, :last}) do
       a when is_map(a) -> a
@@ -73,7 +73,9 @@ defmodule BatlethServer.PageController do
     end
   end
 
-  #Prepares pagination based on records_list
+  @doc """
+  	Prepares pagination based on records_list.
+  """
   defp prepare_pagination(records_list, params) do
     case records_list do
       a when is_list(a) ->
@@ -85,7 +87,9 @@ defmodule BatlethServer.PageController do
     end
   end
 
-  #Returns current_page param or 1 if current_page param is not found / bad
+  @doc """
+  	Returns current_page param or 1 if current_page param is not found / bad.
+  """
   defp get_current_page(params, pages_num) do
     case params["current_page"] do
       nil -> 1
@@ -96,12 +100,16 @@ defmodule BatlethServer.PageController do
     end
   end
 
-  #Counts total number of pages in records_list
+  @doc """
+  	Counts total number of pages in records_list.
+  """
   defp count_pages_num(records_list) do
     Enum.count(records_list) / @per_page |> Float.ceil |> trunc
   end
 
-  #Gets current page from paginated table
+  @doc """
+  	Gets current page from paginated table.
+  """
   defp get_page_from_table(records_list, current_page) do
     records_list
     |> Enum.reverse

@@ -46,7 +46,8 @@ function addData(data)
   data.addColumn('datetime', 'Time');
   data.addColumn('number', 'Percent');
   data.addColumn('number', 'Estimate');
-  var charge = 8;
+  //var charge = 8;
+  var charge = Database.Wpis.getLast()
   
   for(var j = 11; j<13; j++)
   {
