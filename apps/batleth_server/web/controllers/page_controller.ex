@@ -24,24 +24,15 @@ defmodule BatlethServer.PageController do
     end
     
     dbattery = Stat.average(Time.timestamp()-2_592_000, Time.timestamp())  
-    h = if dbattery > 3600 do
-            Float.floor(dbattery/3600) |> round
-        else 0 end
-            
-    m = Float.floor((dbattery-h*3600)/60) |> round
-    
-    if dbattery == 0 do
-          dbattery = "Unknown"
-    else
-          dbattery = Integer.to_string(h)<>"h "<>Integer.to_string(m)<>"m"
-    end
+    dbattery = bat(dbattery)
+    battery = -Stat.average(Time.timestamp()-2_592_000, Time.timestamp(), :greater) |> bat
     IO.puts "Oto lista:"
     IO.inspect(records_list)
     {pages_num, current_page, paged} = case records_list do
     [list] ->prepare_pagination(records_list, params)
     _ -> {1,1,[]}
     end
-    render conn, "index.html", discharge: discharge, battery: Stat.average(Time.timestamp()-2_592_000, Time.timestamp, :greater), dbattery: dbattery, records: paged, last: last, pages_num: pages_num, current_page: current_page
+    render conn, "index.html", discharge: discharge, battery: battery, dbattery: dbattery, records: paged, last: last, pages_num: pages_num, current_page: current_page
   end
 
   def filter(conn, %{"filter" => filter}) do
@@ -51,6 +42,19 @@ defmodule BatlethServer.PageController do
     redirect conn, to: "/"#, filter_from: from, filter_to: to
   end
 
+  def bat(tmp) do
+       h = if tmp > 3600 do
+            Float.floor(tmp/3600) |> round
+        else 0 end
+            
+    m = Float.floor((tmp-h*3600)/60) |> round
+    
+    if tmp == 0 do
+          "Unknown"
+    else
+          Integer.to_string(h)<>"h "<>Integer.to_string(m)<>"m"
+    end
+ end
 
 
   defp get_date(param) do
