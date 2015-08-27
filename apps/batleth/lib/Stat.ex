@@ -52,9 +52,11 @@ defmodule Stat do
 			tmp == true or LastChange.is_reset ->
 				LastChange.change(wpis)
 			wpis.status != LastChange.get.status and length(wp) >= 5 ->
-				mp = make(wp)
-				DatabaseAccess.Prosta.add(mp)
-				LastChange.change(wpis)
+				case make(wp) do
+				    a when is_map(a) -> DatabaseAccess.Prosta.add(a)
+				                        LastChange.change(wpis)
+				    _ ->
+				end
 			Time.timestamp-LastChange.get.timestamp >= 600 and (r == false or Time.timestamp - DatabaseAccess.Prosta.getLast >= 600) ->
 
                         cond do 
@@ -78,7 +80,7 @@ defmodule Stat do
 		variance of the timestamp, variance of the percentage, covariance of the timestamp and the percentage,
 		correlation of the timestamp and the percentage and, finally, simple linear regression.
 
-		Returns a and b values from formula of simple linear regression: y = ax + b.	
+		Returns a and b values from formula of simple linear regression: y = ax + b or - in case of error, a tuple {:error, :dividing_by_zero}	
 	"""
         def make(a) do
                 
@@ -118,12 +120,15 @@ defmodule Stat do
 		var_percentage = pr/l
 
 		cov = average-average_timestamp*average_percentage
-		cor = cov/(:math.sqrt(var_timestamp*var_percentage))
-		a = cor*:math.sqrt(var_percentage/var_timestamp)
-		b = average_percentage-a*(average_timestamp+head.timestamp)
-
-		%{a: a, b: b}
-			
+		vx = :math.sqrt(var_timestamp*var_percentage)
+		if vx != 0 and var_timestamp != 0 do 
+		        cor = cov/vx
+		        a = cor*:math.sqrt(var_percentage/var_timestamp)
+		        b = average_percentage-a*(average_timestamp+head.timestamp)
+		        %{a: a, b: b}
+		else
+		        {:error, :dividing_by_zero}
+                end
 	end
 	
 	
