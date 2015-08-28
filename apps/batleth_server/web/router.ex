@@ -17,7 +17,7 @@ defmodule BatlethServer.Router do
 
     get "/", PageController, :index
     post "/", PageController, :filter
-    get "/last", RecordsController, :last
+    get "/show/:from/:to", RecordsController, :show
   end
 
   # Other scopes may use custom stacks.

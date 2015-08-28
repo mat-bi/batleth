@@ -4,6 +4,7 @@ defmodule BatlethServer.PageController do
 
   @per_page 10
 
+  
   def index(conn, params) do
     IO.inspect(params)
     filter_to = get_date(params["filter_to"])
@@ -30,7 +31,8 @@ defmodule BatlethServer.PageController do
     [list] ->prepare_pagination(records_list, params)
     _ -> {1,1,[]}
     end
-    render conn, "index.html", discharge: discharge, battery: battery, dbattery: dbattery, records: paged, last: last, pages_num: pages_num, current_page: current_page
+    IO.inspect conn
+      render conn, "index.html", discharge: discharge, battery: battery, dbattery: dbattery, records: paged, last: last, pages_num: pages_num, current_page: current_page
   end
 
   def filter(conn, %{"filter" => filter}) do

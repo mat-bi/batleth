@@ -1,8 +1,10 @@
 defmodule BatlethServer.RecordsController do
     use BatlethServer.Web, :controller
 
-    def last(conn, _params) do
-	last = GenServer.call(:base, {:get, :last})
-	render conn, "last.html", last: last
+    def show(conn, params) do
+    	from = Batleth.Helpers.integer_parse(params["from"])
+    	to = Batleth.Helpers.integer_parse(params["to"])
+    	
+    	json conn, DatabaseAccess.get(from,to)
     end
 end
