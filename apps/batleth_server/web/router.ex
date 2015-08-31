@@ -17,8 +17,11 @@ defmodule BatlethServer.Router do
 
     get "/", PageController, :index
     post "/", PageController, :filter
+    get "/show/battery/percentage", BatteryController, :show_percentage
+    get "/show/battery/prediction", BatteryController, :show_prediction
     get "/show/:from/:to", RecordsController, :show
     get "/show/:from/:to/:status", RecordsController, :show_by_status
+    
   end
 
   # Other scopes may use custom stacks.

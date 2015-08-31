@@ -14,15 +14,7 @@ defmodule BatlethServer.PageController do
     date_end = filter_to || Timex.Date.now
     last = get_last_record
     records_list = DatabaseAccess.get(date_start, date_end)
-    if Time.timestamp - DatabaseAccess.Prosta.getLast < 600 and LastChange.get.timestamp < DatabaseAccess.Prosta.getLast and LastChange.get.status == 1 do
-           w = (DatabaseAccess.Prosta.getLast |> DatabaseAccess.Prosta.get)
-           discharge = -w.b/w.a
-           h = round(Float.floor((discharge - Time.timestamp)/3600))
-           m = round(Float.floor(((discharge - Time.timestamp)-h*3600)/60))
-           discharge = Integer.to_string(h)<>"h "<>Integer.to_string(m)<>"m" 
-    else
-           discharge = "Unknown"
-    end
+    discharge = "Unknown"
     
     dbattery = Stat.average(Time.timestamp()-2_592_000, Time.timestamp())  
     dbattery = bat(dbattery)
