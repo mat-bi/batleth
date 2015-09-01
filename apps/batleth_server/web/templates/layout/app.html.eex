@@ -27,7 +27,7 @@
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://www.google.com/jsapi"></script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-
+    <script>require("web/static/js/ajax")</script>
     <script>require("web/static/js/app")</script>
     <script>require("web/static/js/chart")</script>
     <script>require("web/static/js/init")</script>

@@ -34,17 +34,16 @@
                 <h4 class="regular yellow-text text-lighten-4">
                   Current battery level
                 </h4>
-                <h3 id="battery-level" class="bold yellow-text text-accent-3"><%= @last.pr%> %</h3>
+                <h3 class="bold yellow-text text-accent-3" id="battery-level"></h3>
               </div>
             </div>
           </div>
           <div class= "col s12 m6">
             <div class="center card-panel hoverable valign-wrapper deep-orange darken-2 accent-4">
               <div class= "valign">
-                <h4 class="regular yellow-text text-lighten-4">
-                  Full discharge in
+                <h4 class="regular yellow-text text-lighten-4" id="bat-status">
                 </h4>
-                <h3 class="bold yellow-text text-accent-3"><%= @discharge %></h3>
+                <h3 class="bold yellow-text text-accent-3" id="bat-prediction"></h3>
               </div>
             </div>
           </div>
