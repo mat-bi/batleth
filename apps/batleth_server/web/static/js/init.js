@@ -16,7 +16,7 @@ function getBattery() {
 
     		}
     		$('#bat-status').html(zm);
-    		var zm1 = "";
+    		var zm1 = data.time;
     		if(typeof data.time === 'number')
     		{
     			var m = data.time;
@@ -46,7 +46,4 @@ function getBattery() {
     setInterval(getBattery(), 60000);
   }); // end of document ready
 })(jQuery); // end of jQuery name space
-$(document).ready(function() {
-	
-	console.log("ready!");
-	})
+

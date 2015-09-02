@@ -51,12 +51,19 @@ defmodule Stat do
 		cond do
 			tmp == true or LastChange.is_reset ->
 				LastChange.change(wpis)
-			wpis.status != LastChange.get.status and length(wp) >= 5 ->
-				case make(wp) do
-				    a when is_map(a) -> DatabaseAccess.Prosta.add(a)
-				                        LastChange.change(wpis)
-				    _ ->
+				DatabaseAccess.WpisChanges.add(wpis.timestamp, wpis.status)
+			wpis.status != LastChange.get.status->
+				DatabaseAccess.WpisChanges.add(wpis.timestamp, wpis.status)
+				
+				if length(wp) >= 5 do
+					case make(wp) do
+				    		a when is_map(a) -> DatabaseAccess.Prosta.add(a)
+				    		LastChange.change(wpis)
+				                        
+				    		_ ->LastChange.change(wpis)
+					end
 				end
+				
 			Time.timestamp-LastChange.get.timestamp >= 600 and (r == false or Time.timestamp - DatabaseAccess.Prosta.getLast >= 600) ->
 
                         cond do 

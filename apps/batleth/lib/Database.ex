@@ -357,4 +357,37 @@ defdatabase Database do
 	        end
 	
 	end
+	
+	deftable WpisChanges, [:timestamp, :status], type: :ordered_set do
+		@type t :: %WpisChanges{ timestamp: non_neg_integer, status: non_neg_integer}
+		
+		def get(tmp) do
+			Amnesia.transaction do
+				read(tmp)
+			end
+		end
+		
+		def get(from, to) do
+			Amnesia.transaction do
+				r = where timestamp >= from and timestamp <= to
+				r |> Amnesia.Selection.values
+			end
+		end
+		
+		def parse(timestamp, status) do
+			%WpisChanges{ timestamp: timestamp, status: status}
+		end
+		
+		def add(self) do
+			Amnesia.transaction do
+				write(self)
+			end
+		end
+		
+		def previous(tmp) do
+			Amnesia.transaction do
+				get(tmp) |> prev |> get
+			end
+		end
+	end
 end

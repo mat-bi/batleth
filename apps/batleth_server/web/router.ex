@@ -21,7 +21,7 @@ defmodule BatlethServer.Router do
     get "/show/battery/prediction", BatteryController, :show_prediction
     get "/show/:from/:to", RecordsController, :show
     get "/show/:from/:to/:status", RecordsController, :show_by_status
-    
+    get "/show/history/:per_page/:from/:to", HistoryController, :show_info
   end
 
   # Other scopes may use custom stacks.

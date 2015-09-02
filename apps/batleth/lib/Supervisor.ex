@@ -30,6 +30,7 @@ defmodule Batleth.Supervisor do
 			(worker(Stat, [[], []])),
 			(worker(LastChange, [[],[]])),
 			(worker(DatabaseAccess.Prosta, [[],[]])),
+			worker(DatabaseAccess.WpisChanges, [[],[]]),
 			(worker(Batleth, [[],[]]))
 			]
         supervise(children, strategy: :one_for_one)
