@@ -49,6 +49,10 @@ defmodule DatabaseAccess do
         def del(tmp) do
                 GenServer.call(@supervision_name, {:delete, tmp})
         end
+        
+        def previous(tmp) do
+        	GenServer.call(@supervision_name, {:get_previous, tmp})
+        end
 
 
 	#Implementation
@@ -91,9 +95,7 @@ defmodule DatabaseAccess do
 		{:reply, Wpis.get(tmp), []}
 	end
 	
-	def handle_call({:get, from, to}, _, _) do
-		{:reply, Wpis.get(from, to), []}
-	end
+	
 
 
 	def handle_call({:add, %{status: stat, pr: per}}, _, _) do
@@ -108,6 +110,13 @@ defmodule DatabaseAccess do
         def handle_call({:get, from, to, status}, _, _) do
                 {:reply, Wpis.get(from, to, status), []}
         end
+        
+        def handle_call({:get_previous, tmp},_,_) do
+        	{:reply, Wpis.previous(tmp), []}
+        end
+        def handle_call({:get, from, to}, _, _) do
+		{:reply, Wpis.get(from, to), []}
+	end
 end
 
 

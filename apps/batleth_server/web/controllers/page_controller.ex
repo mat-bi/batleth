@@ -6,7 +6,7 @@ defmodule BatlethServer.PageController do
 
   
   def index(conn, params) do
-    IO.inspect(params)
+    #IO.inspect(params)
     filter_to = get_date(params["filter_to"])
     filter_from = get_date(params["filter_from"])
     date_start = filter_to || BatlethServer.Time.week_ago
@@ -23,12 +23,12 @@ defmodule BatlethServer.PageController do
     [list] ->prepare_pagination(records_list, params)
     _ -> {1,1,[]}
     end
-    IO.inspect conn
+    #IO.inspect conn
       render conn, "index.html", discharge: discharge, battery: battery, dbattery: dbattery, records: paged, last: last, pages_num: pages_num, current_page: current_page
   end
 
   def filter(conn, %{"filter" => filter}) do
-    filter_from = DateFormat.parse(filter["from"], "%d %B, %Y", :strftime)
+    filter_from = Timex.DateFormat.parse(filter["from"], "%d %B, %Y", :strftime)
 
     IO.inspect(filter_from)
     redirect conn, to: "/"#, filter_from: from, filter_to: to

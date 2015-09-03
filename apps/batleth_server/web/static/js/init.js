@@ -1,9 +1,9 @@
 function getBattery() {
-	$.getJSON("/show/battery/percentage", function(data) {
+	$.getJSON("/battery/show/percentage", function(data) {
     		$('#battery-level').html(data.pr+" %");
     	});
     	
-    	$.getJSON("/show/battery/prediction", function(data) {
+    	$.getJSON("/battery/show/prediction", function(data) {
     		var zm = ""
     		switch(data.status) {
     			case "Charging":
@@ -21,13 +21,13 @@ function getBattery() {
     		{
     			var m = data.time;
     			var h = Math.floor(m/3600);
-    			
+    			var zm1 = '';
     			if(h > 0)
     			{
-    				m -= h*3600; 
+    				var m = m-h*3600; 
     				var zm1 = h.toString()+'h';
     			}
-    			m = Math.floor(m/60)
+    			var m = Math.floor(m/60)
     			var zm1 = zm1+' '+m.toString()+'m';
     		}
     		
@@ -43,7 +43,8 @@ function getBattery() {
     $('.datepicker').pickadate({
           selectMonths: true
     });
-    setInterval(getBattery(), 60000);
+    getBattery();
+    var run = setInterval(getBattery, 60000);
   }); // end of document ready
 })(jQuery); // end of jQuery name space
 

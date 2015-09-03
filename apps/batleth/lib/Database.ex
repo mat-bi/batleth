@@ -58,16 +58,22 @@ defdatabase Database do
 	end
 
 	@doc """
-		Gets the record before last.
+		Gets the before last wpis (without paramters) or the previous, when timestamp is given.
 		Example:
 		iex> Database.Wpis.previous
 		%Database.Wpis{pr: 46, status: 0, timestamp: 1439553748}
 
 	"""
-        def previous() do
-            Amnesia.transaction do
-                getLast |> prev |> get
-            end
+        def previous(tmp \\ :last) do
+        	case tmp do
+            		:last -> Amnesia.transaction do
+                		 	getLast |> prev |> get
+                		 end
+                	a when is_integer(a) -> Amnesia.transaction do
+                					a |> prev |> get
+                				end
+                	_ -> :error 
+            	end
         end
 	@doc """
 		Gets and returns a list of records [Wpis] with the same status as the previous record's status,

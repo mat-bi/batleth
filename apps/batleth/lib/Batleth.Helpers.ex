@@ -5,4 +5,8 @@ defmodule Batleth.Helpers do
 			_ -> 0
 		end
 	end
+	
+	def ceil_integer(i) do
+		 i |> Float.ceil |> round
+	end
 end
