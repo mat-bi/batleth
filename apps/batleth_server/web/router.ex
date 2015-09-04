@@ -22,7 +22,7 @@ defmodule BatlethServer.Router do
     get "/battery/show/:from/:to", RecordsController, :show
     get "/battery/show/:from/:to/:status", RecordsController, :show_by_status
     get "/history/show/:per_page/:from/:to", HistoryController, :show_info
-    post "/history/show/page/", HistoryController, :show_page
+    get "/history/show/page/:page/:per_page/:from/:to", HistoryController, :show_page
   end
 
   # Other scopes may use custom stacks.

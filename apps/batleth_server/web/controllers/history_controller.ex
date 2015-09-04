@@ -2,7 +2,6 @@ defmodule BatlethServer.HistoryController do
 	use BatlethServer.Web, :controller
 	
 	def show_info(conn, params) do
-		IO.inspect params
 		case Batleth.Helpers.integer_parse(params["per_page"]) do
 			0 -> json conn, %{no_pages: 0, no_categories: 0}
 			per_page when is_integer(per_page) ->
@@ -24,8 +23,65 @@ defmodule BatlethServer.HistoryController do
 		
 	end
 	
-	def show_page(conn, params) do
+	defp empty(conn) do
+		json conn, []
 	end
+	
+	def show_page(conn, params) do
+		page = (params["page"] |> Batleth.Helpers.integer_parse)
+		per_page = params["per_page"] |> Batleth.Helpers.integer_parse
+		cond  do
+			per_page <= 0 or page <= 0 -> conn |> empty
+			is_integer(per_page) -> 
+				from = params["from"] |> Batleth.Helpers.integer_parse
+				to = params["to"] |> Batleth.Helpers.integer_parse
+				
+				case DatabaseAccess.WpisChanges.get(from,to) do
+					[] -> empty(conn)
+					records when is_list(records) ->
+						if (records |> List.first).timestamp != from do
+							case DatabaseAccess.get(from, (records |> List.first).timestamp-1) do
+								[] -> true
+								t when is_list(t) -> records = [%Database.WpisChanges{timestamp: (t |> List.first).timestamp, status: (t |> List.first).status}] ++ records
+							end					
+						end
+				
+						if (records |> List.last).timestamp != to do
+							case DatabaseAccess.get((records |> List.last).timestamp, to-1) do
+								[] -> true
+								t when t |> is_list -> records = records ++ [%Database.WpisChanges{timestamp: (t |> List.last).timestamp, status: (t |> List.last).status}]
+							end
+						end
+						json conn, changes(records) |> Enum.slice((page-1)*per_page, per_page)
+				end
+				
+				
+		end
+	end
+	
+	def changes([], tab) do
+		tab
+	end
+	
+	def changes([h], tab) do
+		tab
+	end
+	
+	def changes([h|t], tab \\ []) do
+		[head| _] = t
+		
+		first = h.timestamp |> DatabaseAccess.get
+		last = head.timestamp |> DatabaseAccess.previous
+		
+		tab = tab ++ [%Change{from: first.timestamp,
+					to: last.timestamp,
+					status: first.status |> BatlethServer.PageView.parse_status,
+					from_pr: first.pr,
+					to_pr: last.pr}]
+		changes(t, tab)
+	end
+	
+	
 	
 	
 end
