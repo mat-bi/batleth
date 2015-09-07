@@ -45,6 +45,27 @@ function getBattery() {
     });
     getBattery();
     var run = setInterval(getBattery, 60000);
+    $('#history_button').click(function() {
+    console.log(document.getElementsByName("_csrf_token")[0].value);
+    	$.post("/history/show/page/1/5", { from: $('#filter_from').val(), to: $('#filter_to').val(), _csrf_token: document.getElementsByName("_csrf_token")[0].value
+    	}).done(function(data){
+    		if(data.length == 0) alert("Haven't found any");
+    		var t = "";
+    		for(var i = 0; i < data.length; ++i)
+    		{
+    			
+    			t += "<tr class=\"record\"><td>"+data[i].from_date;
+    			if(data[i].from_date !== data[i].to_date)
+    				t += " - "+data[i].to_date;
+    			t += "</td><td>"+data[i].from_hour+" - "+data[i].to_hour+"</td><td>"+data[i].status+"</td><td>"+data[i].from_pr
+    			if(data[i].from_pr !== data[i].to_pr) 
+    				t += " - " +data[i].to_pr;
+    			t += "</td>";
+    		}
+    		$("#table_records").html(t);
+    	 })
+    	.fail(function() { alert("H");});
+    	});
   }); // end of document ready
 })(jQuery); // end of jQuery name space
 

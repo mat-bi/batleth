@@ -14,3 +14,7 @@ div .card-panel {
 .icon-block .material-icons {
   font-size: inherit;
 }
+
+.record {
+  color: blue;
+}

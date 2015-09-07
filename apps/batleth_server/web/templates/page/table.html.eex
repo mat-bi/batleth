@@ -15,7 +15,7 @@
       </tr>
     </thead>
 
-    <tbody>
+    <tbody id="table_records">
     <%= for record <- @records do %>
       <%= render "record.html", record: record %>
   <% end %>
