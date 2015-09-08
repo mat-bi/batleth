@@ -22,7 +22,7 @@ defmodule BatlethServer.Router do
     get "/battery/show/:from/:to", RecordsController, :show
     get "/battery/show/:from/:to/:status", RecordsController, :show_by_status
     post "/history/show/page/:page/:per_page/", HistoryController, :show_page
-    get "/history/show/:per_page/:from/:to", HistoryController, :show_info
+    post "/history/show/:per_page/", HistoryController, :show_info
     
   end
 

@@ -5,9 +5,9 @@ defmodule BatlethServer.HistoryController do
 		case Batleth.Helpers.integer_parse(params["per_page"]) do
 			0 -> json conn, %{no_pages: 0, no_categories: 0}
 			per_page when is_integer(per_page) ->
-				from = Batleth.Helpers.integer_parse(params["from"])
-				to = Batleth.Helpers.integer_parse(params["to"])
-				case DatabaseAccess.WpisChanges.get(from,to) do
+				from = params["from"] |> Time.date_to_timestamp
+				to = params["to"] |> Time.date_to_timestamp
+				case DatabaseAccess.WpisChanges.get(from,to-1) do
 					[] -> no_pages = no_categories = 0
 					a when is_list(a) -> case (a |> List.first).timestamp 
 									|> DatabaseAccess.previous do
@@ -34,11 +34,9 @@ defmodule BatlethServer.HistoryController do
 		cond  do
 			per_page <= 0 or page <= 0 -> conn |> empty
 			is_integer(per_page) -> 
-				from =  params["from"] |> Batleth.Helpers.date_to_timestamp
-				to = params["to"] |> Batleth.Helpers.date_to_timestamp
-				IO.inspect(from)
-				IO.inspect(to)
-				case DatabaseAccess.WpisChanges.get(from,to) do
+				from =  params["from"] |> Time.date_to_timestamp
+				to = params["to"] |> Time.date_to_timestamp
+				case DatabaseAccess.WpisChanges.get(from,to-1) do
 					[] -> empty(conn)
 					records when is_list(records) ->
 						if (records |> List.first).timestamp != from do
@@ -54,8 +52,7 @@ defmodule BatlethServer.HistoryController do
 								t when t |> is_list -> records = records ++ [%Database.WpisChanges{timestamp: (t |> List.last).timestamp, status: (t |> List.last).status}]
 							end
 						end
-						IO.inspect records
-						json conn, changes(records) |> Enum.slice((page-1)*per_page, per_page)
+						json conn, records |> changes |> Enum.slice((page-1)*per_page, per_page)
 				end
 				
 				
@@ -71,21 +68,18 @@ defmodule BatlethServer.HistoryController do
 	end
 	
 	def changes([h|t], tab \\ []) do
-		IO.inspect h
-		IO.inspect t
+
 		if length(t) == 0 do
 			tab
 		else
 			[head| _] = t
-			IO.inspect h
 			first = h.timestamp |> DatabaseAccess.get
 			last = head.timestamp |> DatabaseAccess.previous
-			IO.inspect first
-			IO.inspect last
-			tab = tab ++ [%Change{from_date: Batleth.Helpers.timestamp_to_date(first.timestamp),
-						to_date: Batleth.Helpers.timestamp_to_date(last.timestamp),
-						from_hour: Batleth.Helpers.timestamp_to_hour(first.timestamp),
-						to_hour: Batleth.Helpers.timestamp_to_hour(last.timestamp),
+			last = if last == nil or last.timestamp < first.timestamp do first else last end
+			tab = tab ++ [%Change{from_date: Time.timestamp_to_date(first.timestamp),
+						to_date: Time.timestamp_to_date(last.timestamp),
+						from_hour: Time.timestamp_to_hour(first.timestamp),
+						to_hour: Time.timestamp_to_hour(last.timestamp),
 						status: first.status |> BatlethServer.PageView.parse_status,
 						from_pr: first.pr,
 						to_pr: last.pr}]

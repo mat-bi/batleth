@@ -14,3 +14,4 @@
   <div id="history_button" class="btn-floating btn-large waves-effect waves-light light-blue darken-2"> <i class="material-icons">done</i> </div>
 </div>
 <% end %>
+

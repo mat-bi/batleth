@@ -16,5 +16,6 @@ div .card-panel {
 }
 
 .record {
-  color: blue;
+  color: #606060;
+  background-color: white;
 }
