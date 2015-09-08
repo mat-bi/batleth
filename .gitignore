@@ -2,4 +2,4 @@
 /deps
 erl_crash.dump
 *.ez
-apps/batleth/Mnesia.nonode@nohost
+apps/batleth/Mnesia.nonode@nohost/
