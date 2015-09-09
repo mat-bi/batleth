@@ -19,3 +19,8 @@ div .card-panel {
   color: #606060;
   background-color: white;
 }
+
+#average_table{
+   width: 50%;
+   text-align: center;
+   }

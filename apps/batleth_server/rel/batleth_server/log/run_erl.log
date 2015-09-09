@@ -1,0 +1,8 @@
+run_erl [11785] Tue Sep  8 17:52:24 2015
+Args before exec of shell:
+run_erl [11785] Tue Sep  8 17:52:24 2015
+argv[0] = sh
+run_erl [11785] Tue Sep  8 17:52:24 2015
+argv[1] = -c
+run_erl [11785] Tue Sep  8 17:52:24 2015
+argv[2] = exec "/home/mat-bi/batleth/apps/batleth_server/rel/batleth_server/bin/batleth_server" "console"

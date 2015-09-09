@@ -7,6 +7,9 @@ defmodule BatlethServer.HistoryController do
 			per_page when is_integer(per_page) ->
 				from = params["from"] |> Time.date_to_timestamp
 				to = params["to"] |> Time.date_to_timestamp
+				
+				charge = -Stat.average(from, to, :greater) |> round
+				discharge = Stat.average(from, to) |> round
 				case DatabaseAccess.WpisChanges.get(from,to-1) do
 					[] -> no_pages = no_categories = 0
 					a when is_list(a) -> case (a |> List.first).timestamp 
@@ -19,7 +22,7 @@ defmodule BatlethServer.HistoryController do
 							     end
 				end				
 		end
-		json conn, %{no_pages: no_pages, no_categories: no_categories} 
+		json conn, %{no_pages: no_pages, no_categories: no_categories, charge: charge, discharge: discharge} 
 		
 	end
 	

@@ -19,16 +19,7 @@ function getBattery() {
     		var zm1 = data.time;
     		if(typeof data.time === 'number')
     		{
-    			var m = data.time;
-    			var h = Math.floor(m/3600);
-    			var zm1 = '';
-    			if(h > 0)
-    			{
-    				var m = m-h*3600; 
-    				var zm1 = h.toString()+'h';
-    			}
-    			var m = Math.floor(m/60)
-    			var zm1 = zm1+' '+m.toString()+'m';
+    			zm1 = timestamp_to_time(zm1);
     		}
     		
     		
@@ -38,36 +29,45 @@ function getBattery() {
     	
 }
 
+function timestamp_to_time(time) {
+          var m = time;
+    	  var h = Math.floor(m/3600);
+    	  var zm1 = '';
+    	  if(h > 0)
+    	  {
+    		var m = m-h*3600; 
+    		var zm1 = h.toString()+'h';
+    	  }
+    	  var m = Math.floor(m/60)
+    	  var zm1 = zm1+' '+m.toString()+'m';
+    	  return zm1;
+}
+
 function history_pagination(index) {
 	var p = 10;
     	var json = {from: $('#filter_from').val(), to: $('#filter_to').val(), _csrf_token: document.getElementsByName("_csrf_token")[0].value};
         $.post("/history/show/"+p, json)
         	.done(function(data) {
+        	        alert(data.charge);
         		var mes = "Showing results from "+((index-1)*p+1)+" to ";
         		if((index*p) > data.no_categories)
-        			mes += data.no_categories+" of "+data.no_categories;
+        			mes += data.no_categories;
         		else
         			mes += (index*p);
+        			
+        		mes +=  " of "+data.no_categories+"<br/>";
+        		//mes += "Average charging in "+timestamp_to_time(data.charge);
+        		$("#average_discharging").html(timestamp_to_time(data.discharge));
+        		$("#average_charging").html(timestamp_to_time(data.charge));
         		$("#results").html(mes);
-        		var pag = "";
-        		
-        		for(var i = 1; i <= data.no_pages; ++i)
-        		{
-        			pag += '<li class="';
-        			if(i === index)
-        				pag += "yellow-text disabled active light-blue darken-2";
-        			else
-        				pag += "waves-effect";
-        			pag += ' pagination_number" value="'+i+'">'+i+'</li>'; 
-        		}
-        		$("#paginator").html(pag);
-        		var y = 0;
-        		for(; y < data.no_pages;)
-        		{
-        			console.log(y);
-        			document.getElementsByClassName("pagination_number")[y].onclick = function() { console.log(this); history_pagination(this.value);};
-        			y++;
-        		}
+        		$('#paginator').twbsPagination({ 
+        		        totalPages: data.no_pages, 
+        		        startPage: index, 
+        		        visiblePages: 8, 
+        		        onPageClick: function (event, page) {
+        		            history_pagination(page);
+        		            }
+        		        });
         	});
     	$.post("/history/show/page/"+index+"/"+p,json)
     		.done(function(data){

@@ -1,3 +1,16 @@
+<table class="table-container hoverable center" id="average_table">
+  <tbody>
+    <tr>
+      <td class="light-blue darken-2 yellow-text icon_block text-lighten-4 center">Average discharging</td>
+      <td class="center" id="average_discharging"></td>
+    </tr>
+    <tr>
+      <td class="light-blue darken-2 yellow-text icon_block text-lighten-4 center"> Average charging</td>
+      <td class="center" id="average_charging"></td>
+    </tr>
+  </tbody>
+</table>
+
 <div id="results"></div>
 <div class="table-container hoverable light-blue darken-2 z-depth-1 yellow-text text-lighten-4">
   <div class="icon-block">
