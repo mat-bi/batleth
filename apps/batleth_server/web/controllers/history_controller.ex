@@ -55,7 +55,7 @@ defmodule BatlethServer.HistoryController do
 								t when t |> is_list -> records = records ++ [%Database.WpisChanges{timestamp: (t |> List.last).timestamp, status: (t |> List.last).status}]
 							end
 						end
-						json conn, records |> changes |> Enum.slice((page-1)*per_page, per_page)
+						json conn, records |> Enum.slice((page-1)*per_page, per_page+1) |> changes 
 				end
 				
 				

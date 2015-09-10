@@ -48,7 +48,6 @@ function history_pagination(index) {
     	var json = {from: $('#filter_from').val(), to: $('#filter_to').val(), _csrf_token: document.getElementsByName("_csrf_token")[0].value};
         $.post("/history/show/"+p, json)
         	.done(function(data) {
-        	        alert(data.charge);
         		var mes = "Showing results from "+((index-1)*p+1)+" to ";
         		if((index*p) > data.no_categories)
         			mes += data.no_categories;
@@ -60,6 +59,7 @@ function history_pagination(index) {
         		$("#average_discharging").html(timestamp_to_time(data.discharge));
         		$("#average_charging").html(timestamp_to_time(data.charge));
         		$("#results").html(mes);
+        		document.getElementById("average_table").style.visibility = "visible";
         		$('#paginator').twbsPagination({ 
         		        totalPages: data.no_pages, 
         		        startPage: index, 

@@ -1,4 +1,4 @@
-<table class="table-container hoverable center" id="average_table">
+<table class="table-container hoverable center z-depth-1" id="average_table">
   <tbody>
     <tr>
       <td class="light-blue darken-2 yellow-text icon_block text-lighten-4 center">Average discharging</td>

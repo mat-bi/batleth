@@ -23,4 +23,10 @@ div .card-panel {
 #average_table{
    width: 50%;
    text-align: center;
+   visibility: collapse;
+   margin-bottom: 20px;
    }
+   
+tr {
+   visibility: inherit;
+}
