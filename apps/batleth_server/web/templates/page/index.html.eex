@@ -18,12 +18,9 @@
           <%= render "form.html", conn: @conn %>
         </div>
         <div class="row">
-          <%= render "table.html", records: @records%>
+          <%= render "table.html" %>
         </div>
         <div class="row">
-          <%= if @records != [] do %>
-          <%= render "pagination.html", pages_num: @pages_num, current_page: @current_page, conn: @conn %>
-          <% end %>
                   </div>
       </div>
       <div class="col s12 l6">

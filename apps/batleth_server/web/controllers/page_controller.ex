@@ -7,24 +7,24 @@ defmodule BatlethServer.PageController do
   
   def index(conn, params) do
     #IO.inspect(params)
-    filter_to = get_date(params["filter_to"])
-    filter_from = get_date(params["filter_from"])
-    date_start = filter_to || BatlethServer.Time.week_ago
+    #filter_to = get_date(params["filter_to"])
+    #filter_from = get_date(params["filter_from"])
+    #date_start = filter_to || BatlethServer.Time.week_ago
     #date_start = filter_to || BatlethServer.Time.Date.subtract(Time.to_timestamp(Date.now, 7, :days))
-    date_end = filter_to || Timex.Date.now
-    last = get_last_record
-    records_list = DatabaseAccess.get(date_start, date_end)
-    discharge = "Unknown"
+    #date_end = filter_to || Timex.Date.now
+    #last = get_last_record
+    #records_list = DatabaseAccess.get(date_start, date_end)
+    #discharge = "Unknown"
     
     dbattery = Stat.average(Time.timestamp()-2_592_000, Time.timestamp())  
     dbattery = bat(dbattery)
     battery = -Stat.average(Time.timestamp()-2_592_000, Time.timestamp(), :greater) |> bat
-    {pages_num, current_page, paged} = case records_list do
-    [list] ->prepare_pagination(records_list, params)
-    _ -> {1,1,[]}
-    end
+    #{pages_num, current_page, paged} = case records_list do
+    #[list] ->prepare_pagination(records_list, params)
+    #_ -> {1,1,[]}
+    #end
     #IO.inspect conn
-      render conn, "index.html", discharge: discharge, battery: battery, dbattery: dbattery, records: paged, last: last, pages_num: pages_num, current_page: current_page
+      render conn, "index.html", battery: battery, dbattery: dbattery#, discharge: discharge, records: paged, last: last, pages_num: pages_num, current_page: current_page
   end
 
   def filter(conn, %{"filter" => filter}) do

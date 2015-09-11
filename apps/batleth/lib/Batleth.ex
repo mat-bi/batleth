@@ -31,7 +31,7 @@ defmodule Batleth do
 							{:ok, percentage, status} = BatteryReader.read
 							DatabaseAccess.add(%{status: status, pr: percentage})
                                                         [a] = DatabaseAccess.getLast(1)
-							Stat.run(a, if time_dif > 60 do true else false end)
+							Stat.run(a, if time_dif > 70 do true else false end)
 							:timer.sleep(60000)	
 
 						:wait -> 
